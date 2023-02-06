@@ -1,0 +1,23 @@
+input {
+    &[type="text"] {
+        box-shadow: none;
+        border-radius: 5px;
+        border: 1px solid;
+        height: 20px;
+        width: 200px;
+    }
+    &[type="submit"] {
+        box-shadow: none;
+        border-radius: 2px;
+        border: 1px solid;
+        height: 23px;
+        &:hover {
+            border: 1px solid blue;
+        }
+    }
+}
+
+form {
+    padding: 20px;
+    display: inline-block;
+}
