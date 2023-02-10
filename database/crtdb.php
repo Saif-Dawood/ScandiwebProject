@@ -1,13 +1,16 @@
 <?php
+require "DBFunc.php";
 
-$sname = "localhost";
-$uname = "saif";
-$pass = "qwer";
-$db = "scandi";
+use mysqli;
+use Exception;
 
 // Connecting without a database
 try {
-    $conn = new mysqli($sname, $uname, $pass);
+    $conn = new mysqli (
+        $GLOBALS['$sname'],
+        $GLOBALS['$uname'],
+        $GLOBALS['$pass']
+    );
 } catch (Exception $e) {
     die("Connection failed " . $e->getMessage());
 }
@@ -22,5 +25,5 @@ try {
     die("Error while creating database: " . $e->getMessage());
 }
 
-// saving the process
+// saving the changes
 $conn->close();

@@ -1,11 +1,19 @@
 <?php
-require "crtdb.php";
+require "CrtDB.php";
 
 // Connecting to the database
 try {
-    $conn = new mysqli($sname, $uname, $pass, $db);
+    $conn = new mysqli (
+        $GLOBALS['$sname'],
+        $GLOBALS['$uname'],
+        $GLOBALS['$pass'],
+        $GLOBALS['$db']
+    );
 } catch (Exception $e) {
-    die("Connection to created database failed: " . $e->getMessage());
+    die (
+        "Connection to created database failed: " . 
+        $e->getMessage()
+    );
 }
 
 // Query to create the table
@@ -17,7 +25,8 @@ $sql = "CREATE TABLE IF NOT EXISTS items (
         type VARCHAR(4) NOT NULL,
         size INT(6) UNSIGNED,
         weight REAL(3,2) UNSIGNED,
-        dimensions VARCHAR(14))";
+        dimensions VARCHAR(14)
+    )";
 
 // Creating the table if it doesn't actually exist
 try {
@@ -26,5 +35,5 @@ try {
     die("Table creatin failed: " . $e->getMessage());
 }
 
-// saving the process
+// saving the changes
 $conn->close();
