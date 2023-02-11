@@ -44,3 +44,6 @@ if ($rows != false && $rows->num_rows != 0) {
         $i++;
     }
 }
+else {
+    echo "<h1 style=\"text-align:'center'\">No items found in the database</h1>";
+}

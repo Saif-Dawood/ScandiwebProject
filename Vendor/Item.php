@@ -54,7 +54,7 @@ abstract class Item
      * A function used for deleting
      * the checked items
      */
-    public function massDelete()
+    public static function massDelete()
     {
 
     }
@@ -64,13 +64,6 @@ abstract class Item
      * of the object in the database
      */
     public abstract function saveObj(Table $table);
-
-    /**
-     * An abstract function for getting the properties
-     * of a single object from the database
-     * according to sku
-     */
-    public abstract function getObj(Table $table, int $sku);
 
     /**
      * An abstract function for printing

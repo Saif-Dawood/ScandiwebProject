@@ -55,43 +55,6 @@ class Book extends Item
     }
 
     /**
-     * A function for getting the properties
-     * of a single Book according to sku
-     * 
-     * Returns the corresponding object if found
-     */
-    public function getObj(Table $table, int $sku)
-    {
-        // Try to get all the rows from $table
-        $rows = $table->getRows();
-        if ($rows === false || $rows->num_rows === 0) {
-            return false;
-        }
-
-        // Search for row with $sku
-        while ($row = $rows->fetch_assoc()) {
-            if ($row['sku'] === $sku) {
-                break;
-            }
-        }
-
-        // Not found
-        if (!$row) {
-            return false;
-        }
-
-        // Found
-        // Assign values to this obj
-        $this->sku = $row['sku'];
-        $this->name = $row['name'];
-        $this->price = $row['price'];
-        $this->dbdiff = $row['dbdiff'];
-
-        // No errors
-        return true;
-    }
-
-    /**
      * A function to print the div containing the item
      * in index.php
      */
