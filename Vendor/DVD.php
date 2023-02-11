@@ -31,14 +31,13 @@ class DVD extends Item
         string $sku,
         string $name,
         float $price,
-        bool $checked,
         float $size
     ) {
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
-        $this->checked = $checked;
         $this->size = $size;
+        $this->dbdiff = "$size";
     }
 
     /**
@@ -50,9 +49,8 @@ class DVD extends Item
         $cols_vals['sku'] = $this->sku;
         $cols_vals['name'] = $this->name;
         $cols_vals['price'] = $this->price;
-        $cols_vals['checked'] = $this->checked;
         $cols_vals['type'] = "DVD";
-        $cols_vals['size'] = $this->size;
+        $cols_vals['dbdiff'] = $this->dbdiff;
         return $table->addRow($cols_vals);
     }
 
@@ -66,7 +64,7 @@ class DVD extends Item
     {
         // Try to get all the rows from $table
         $rows = $table->getRows();
-        if ($rows === false || $rows->num_rows == 0) {
+        if ($rows === false || $rows->num_rows === 0) {
             return false;
         }
 
@@ -87,8 +85,7 @@ class DVD extends Item
         $this->sku = $row['sku'];
         $this->name = $row['name'];
         $this->price = $row['price'];
-        $this->checked = $row['checked'];
-        $this->size = $row['size'];
+        $this->dbdiff = $row['dbdiff'];
 
         // No errors
         return true;
@@ -103,11 +100,11 @@ class DVD extends Item
         echo "
             <div class=\"item\">\n
                 <input type=\"checkbox\" class=\"delete-checkbox\" " .
-            ($this->checked ? "checked" : "") . "><br>\n
-                <label>" . $this->sku . "</label><br>\n
-                <label>" . $this->name . "</label><br>\n
-                <label>" . $this->price . "$</label><br>\n
-                <label>Size: " . $this->size . " MB</label><br>\n
+                    ($this->checked ? "checked" : "") . "><br>\n
+                <label>$this->sku</label><br>\n
+                <label>$this->name</label><br>\n
+                <label>$this->price\$</label><br>\n
+                <label>Size: $this->size KG</label><br>\n
             </div>
         ";
     }

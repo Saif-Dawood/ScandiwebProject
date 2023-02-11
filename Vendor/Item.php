@@ -32,6 +32,7 @@ abstract class Item
     protected $name;
     protected $price;
     protected $checked = false;
+    protected $dbdiff;
 
     /**
      * Setter for checked
@@ -55,6 +56,7 @@ abstract class Item
      */
     public function massDelete()
     {
+
     }
 
     /**

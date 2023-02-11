@@ -31,14 +31,13 @@ class Book extends Item
         string $sku,
         string $name,
         float $price,
-        bool $checked,
         float $weight
     ) {
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
-        $this->checked = $checked;
         $this->weight = $weight;
+        $this->dbdiff = "$weight";
     }
 
     /**
@@ -50,9 +49,8 @@ class Book extends Item
         $cols_vals['sku'] = $this->sku;
         $cols_vals['name'] = $this->name;
         $cols_vals['price'] = $this->price;
-        $cols_vals['checked'] = $this->checked;
         $cols_vals['type'] = "Book";
-        $cols_vals['weight'] = $this->weight;
+        $cols_vals['dbdiff'] = $this->dbdiff;
         return $table->addRow($cols_vals);
     }
 
@@ -66,7 +64,7 @@ class Book extends Item
     {
         // Try to get all the rows from $table
         $rows = $table->getRows();
-        if ($rows === false || $rows->num_rows == 0) {
+        if ($rows === false || $rows->num_rows === 0) {
             return false;
         }
 
@@ -87,8 +85,7 @@ class Book extends Item
         $this->sku = $row['sku'];
         $this->name = $row['name'];
         $this->price = $row['price'];
-        $this->checked = $row['checked'];
-        $this->weight = $row['weight'];
+        $this->dbdiff = $row['dbdiff'];
 
         // No errors
         return true;
@@ -103,11 +100,11 @@ class Book extends Item
         echo "
             <div class=\"item\">\n
                 <input type=\"checkbox\" class=\"delete-checkbox\" " .
-            ($this->checked ? "checked" : "") . "><br>\n
-                <label>" . $this->sku . "</label><br>\n
-                <label>" . $this->name . "</label><br>\n
-                <label>" . $this->price . "$</label><br>\n
-                <label>Weight: " . $this->weight . " KG</label><br>\n
+                    ($this->checked ? "checked" : "") . "><br>\n
+                <label>$this->sku</label><br>\n
+                <label>$this->name</label><br>\n
+                <label>$this->price\$</label><br>\n
+                <label>Weight: $this->weight KG</label><br>\n
             </div>
         ";
     }

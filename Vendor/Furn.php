@@ -34,7 +34,6 @@ class Furn extends Item
         string $sku,
         string $name,
         float $price,
-        bool $checked,
         float $height,
         float $width,
         float $length
@@ -42,11 +41,11 @@ class Furn extends Item
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
-        $this->checked = $checked;
         $this->height = $height;
         $this->width = $width;
         $this->length = $length;
-        $this->dimensions = $height . "x" . $width . "x" . $length;
+        $this->dimensions = "$height" . "x" . "$width" . "x" . "$length";
+        $this->dbdiff = "$height" . ", " . "$width" . ", " . "$length";
     }
 
     /**
@@ -58,9 +57,8 @@ class Furn extends Item
         $cols_vals['sku'] = $this->sku;
         $cols_vals['name'] = $this->name;
         $cols_vals['price'] = $this->price;
-        $cols_vals['checked'] = $this->checked;
         $cols_vals['type'] = "Furn";
-        $cols_vals['dimensions'] = $this->dimensions;
+        $cols_vals['dbdiff'] = $this->dbdiff;
         return $table->addRow($cols_vals);
     }
 
@@ -74,7 +72,7 @@ class Furn extends Item
     {
         // Try to get all the rows from $table
         $rows = $table->getRows();
-        if ($rows === false || $rows->num_rows == 0) {
+        if ($rows === false || $rows->num_rows === 0) {
             return false;
         }
 
@@ -95,8 +93,9 @@ class Furn extends Item
         $this->sku = $row['sku'];
         $this->name = $row['name'];
         $this->price = $row['price'];
-        $this->checked = $row['checked'];
-        $this->dimensions = $row['dimensions'];
+        $this->dbdiff = $row['dbdiff'];
+        $this->dimensions = $this->height . "x" . 
+            $this->width . "x" . $this->length;
 
         // No errors
         return true;
@@ -111,11 +110,11 @@ class Furn extends Item
         echo "
             <div class=\"item\">\n
                 <input type=\"checkbox\" class=\"delete-checkbox\" " .
-            ($this->checked ? "checked" : "") . "><br>\n
-                <label>" . $this->sku . "</label><br>\n
-                <label>" . $this->name . "</label><br>\n
-                <label>" . $this->price . "$</label><br>\n
-                <label>Dimensions: " . $this->dimensions . " </label><br>\n
+                    ($this->checked ? "checked" : "") . "><br>\n
+                <label>$this->sku</label><br>\n
+                <label>$this->name</label><br>\n
+                <label>$this->price\$</label><br>\n
+                <label>Dimensions: $this->dimensions KG</label><br>\n
             </div>
         ";
     }
