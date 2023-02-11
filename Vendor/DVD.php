@@ -1,12 +1,9 @@
 <?php
+
 namespace Vendor;
 
-require "../database/crtables.php";
-
-use Exception;
+use Vendor\Database\Table;
 use Vendor\Item;
-
-use function Database\connectDB;
 
 /**
  * A class for DVD-discs
@@ -22,22 +19,21 @@ use function Database\connectDB;
  *                          string $name,
  *                          float $price,
  *                          float $size)
- *              saveVars()
- *              getVars()
- *              getVar(int $sku)
+ *              saveObj(Table $table)
+ *              getObj(Table $table, int $sku)
+ *              printItem()
  */
 class DVD extends Item
 {
     protected $size;
 
-    public function __construct (
+    public function __construct(
         string $sku,
         string $name,
         float $price,
         bool $checked,
         float $size
-    )
-    {
+    ) {
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
@@ -49,66 +45,15 @@ class DVD extends Item
      * A function for storing the properties
      * of the DVD in the database
      */
-    public function saveVars()
+    public function saveObj(Table $table)
     {
-        // Try connecting
-        if (connectDB($conn) === false) {
-            return false;
-        }
-
-        // Preparing the parameters and binding them
-        $stmt = $conn->prepare (
-            "INSERT INTO items (
-                sku, name, price, checked, type, size, weight, dimensions
-            ) VALUES (
-                ?, ?, ?, ?, ?, ?, NULL, NULL
-            )"
-        );
-        $stmt->bind_param ("ssdsd",
-            $this->sku,
-            $this->name,
-            $this->price,
-            $this->checked,
-            "DVD",
-            $this->size
-        );
-
-        // Execute
-        try {
-            $stmt->execute();
-        } catch (Exception $e) {
-            $conn->close();
-            return false;
-        }
-
-        // Save the changes
-        $conn->close();
-
-        // No Errors
-        return true;
-    }
-
-    /**
-     * A function for getting the properties
-     * of all the DVDs from the database
-     * 
-     * Returns -> a num of rows that you can get the values from
-     */
-    public static function getVars()
-    {
-        // Try connecting
-        if (connectDB($conn) === false) {
-            return false;
-        }
-
-        // Query for getting the properties
-        $sql = "SELECT * FROM items WHERE type = 'DVD'";
-        $result = $conn->query($sql);
-
-        // close connection
-        $conn->close();
-
-        return $result;
+        $cols_vals['sku'] = $this->sku;
+        $cols_vals['name'] = $this->name;
+        $cols_vals['price'] = $this->price;
+        $cols_vals['checked'] = $this->checked;
+        $cols_vals['type'] = "DVD";
+        $cols_vals['size'] = $this->size;
+        return $table->addRow($cols_vals);
     }
 
     /**
@@ -117,39 +62,36 @@ class DVD extends Item
      * 
      * Returns the corresponding object if found
      */
-    public static function getVar(int $sku)
+    public function getObj(Table $table, int $sku)
     {
-        // Get all objects from the database
-        $result = DVD::getVars();
-        // Check if at least one object exists
-        if ($result === false || $result->num_rows === 0) {
+        // Try to get all the rows from $table
+        $rows = $table->getRows();
+        if ($rows === false || $rows->num_rows == 0) {
             return false;
         }
 
-        // Search for that $sku
-        while ($row = $result->fetch_assoc()) {
+        // Search for row with $sku
+        while ($row = $rows->fetch_assoc()) {
             if ($row['sku'] === $sku) {
                 break;
             }
         }
 
-        // Found none
+        // Not found
         if (!$row) {
             return false;
         }
 
-        // Found!
-        // Store properties into a new object
-        $obj = new DVD (
-            $row['sku'],
-            $row['name'],
-            $row['price'],
-            $row['checked'],
-            $row['size']
-        );
+        // Found
+        // Assign values to this obj
+        $this->sku = $row['sku'];
+        $this->name = $row['name'];
+        $this->price = $row['price'];
+        $this->checked = $row['checked'];
+        $this->size = $row['size'];
 
-        // Return the new object
-        return $obj;
+        // No errors
+        return true;
     }
 
     /**
@@ -160,7 +102,8 @@ class DVD extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" " . ($this->checked?"checked":"") . "><br>\n
+                <input type=\"checkbox\" class=\"delete-checkbox\" " .
+            ($this->checked ? "checked" : "") . "><br>\n
                 <label>" . $this->sku . "</label><br>\n
                 <label>" . $this->name . "</label><br>\n
                 <label>" . $this->price . "$</label><br>\n
