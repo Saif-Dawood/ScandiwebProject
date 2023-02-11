@@ -6,11 +6,11 @@ input {
         height: 20px;
         width: 200px;
     }
-    &[type="submit"] {
+    &[type="submit"] &[type="button"] {
         box-shadow: none;
         border-radius: 2px;
         border: 1px solid;
-        height: 23px;
+        height: 10px;
         &:hover {
             border: 1px solid blue;
         }
@@ -20,4 +20,18 @@ input {
 form {
     padding: 20px;
     display: inline-block;
+}
+
+header {
+    padding-bottom: 20px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 100px 100px;
+    border-bottom: 1px solid black;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid black;
 }

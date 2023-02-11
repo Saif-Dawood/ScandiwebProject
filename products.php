@@ -1,4 +1,10 @@
 <?php
+require "Vendor\\Database\\Database.php";
+require "Vendor\\Database\\Table.php";
+require "Vendor\\Item.php";
+require "Vendor\\DVD.php";
+require "Vendor\\Book.php";
+require "Vendor\\Furn.php";
 
 use Vendor\Database\Database;
 use Vendor\Database\Table;
@@ -45,5 +51,6 @@ if ($rows != false && $rows->num_rows != 0) {
     }
 }
 else {
-    echo "<h1 style=\"text-align:'center'\">No items found in the database</h1>";
+    echo "<h2 style=\"text-align:'center'\">
+        No items found in the database</h2>";
 }
