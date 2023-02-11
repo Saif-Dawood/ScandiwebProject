@@ -15,7 +15,7 @@ use function Database\connectDB;
  * which contains a new property (size)
  * 
  * Properties:
- *              size: size of the DVD (Mb)
+ *              size: size of the DVD (MB)
  * 
  * Methods:
  *              __construct(string $sku,
@@ -102,7 +102,7 @@ class DVD extends Item
         }
 
         // Query for getting the properties
-        $sql = "SELECT * FROM items";
+        $sql = "SELECT * FROM items WHERE type = 'DVD'";
         $result = $conn->query($sql);
 
         // close connection
@@ -152,6 +152,10 @@ class DVD extends Item
         return $obj;
     }
 
+    /**
+     * A function to print the div containing the item
+     * in index.php
+     */
     public function printItem()
     {
         echo "
