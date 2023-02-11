@@ -4,7 +4,8 @@ namespace Vendor;
 /**
  * A class for all the items
  * 
- * This is an abstract parent class for any type of item and types are going to be its childs
+ * This is an abstract parent class for any type of item
+ * and types are going to be its childs
  * 
  * Properties:
  *              sku: a unique code for each item
@@ -12,7 +13,6 @@ namespace Vendor;
  *              price: item's price
  * 
  * Methods:
- *              __construct(string $sku, string $name, float $price)
  * (abstract)   saveVars()
  * (abstract)   getVars()
  */
@@ -21,13 +21,7 @@ abstract class Item
     protected $sku;
     protected $name;
     protected $price;
-
-    public function __construct(string $sku, string $name, float $price)
-    {
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->price = $price;
-    }
+    protected $checked = false;
 
     /**
      * An abstract function for storing the properties
@@ -37,7 +31,45 @@ abstract class Item
 
     /**
      * An abstract function for getting the properties
-     * of the object from the database
+     * of all the objects of the same type from the database
      */
-    public abstract function getVars();
+    public abstract static function getVars();
+
+    /**
+     * An abstract function for getting the properties
+     * of a single object from the database
+     * according to sku
+     */
+    public abstract static function getVar(int $sku);
+
+    /**
+     * Setter for checked
+     */
+    public function setChecked(bool $checked)
+    {
+        $this->checked = $checked;
+    }
+
+    /**
+     * Getter for checked
+     */
+    public function getChecked()
+    {
+        return $this->checked;
+    }
+
+    /**
+     * An abstract function for printing
+     * the object in the form
+     */
+    public abstract function printItem();
+
+    /**
+     * A function used for deleting
+     * the checked items
+     */
+    public function massDelete()
+    {
+
+    }
 }

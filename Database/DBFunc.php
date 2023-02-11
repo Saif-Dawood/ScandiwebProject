@@ -20,7 +20,7 @@ $GLOBALS['$db'] = "scandi";
  * pass -> password
  * db -> database name
  */
-function connectDB(&$conn)
+function connectDB(mysqli &$conn)
 {
     try {
         $conn = new mysqli (
