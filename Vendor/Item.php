@@ -11,10 +11,17 @@ namespace Vendor;
  *              sku: a unique code for each item
  *              name: item's name
  *              price: item's price
+ *              checked: If the checkbox is checked or not
+ *                       for mass delete
  * 
  * Methods:
+ *              setChecked(bool $checked)
+ *              getChecked()
+ *              massDelete()
  * (abstract)   saveVars()
  * (abstract)   getVars()
+ * (abstract)   getVar(int $sku)
+ * (abstract)   printItem()
  */
 abstract class Item
 {
@@ -24,38 +31,28 @@ abstract class Item
     protected $checked = false;
 
     /**
-     * An abstract function for storing the properties
-     * of the object in the database
-     */
-    public abstract function saveVars();
-
-    /**
-     * An abstract function for getting the properties
-     * of all the objects of the same type from the database
-     */
-    public abstract static function getVars();
-
-    /**
-     * An abstract function for getting the properties
-     * of a single object from the database
-     * according to sku
-     */
-    public abstract static function getVar(int $sku);
-
-    /**
      * Setter for checked
      */
     public function setChecked(bool $checked)
     {
         $this->checked = $checked;
     }
-
+    
     /**
      * Getter for checked
      */
     public function getChecked()
     {
         return $this->checked;
+    }
+    
+    /**
+     * A function used for deleting
+     * the checked items
+     */
+    public function massDelete()
+    {
+        
     }
 
     /**
@@ -65,11 +62,21 @@ abstract class Item
     public abstract function printItem();
 
     /**
-     * A function used for deleting
-     * the checked items
+     * An abstract function for storing the properties
+     * of the object in the database
      */
-    public function massDelete()
-    {
-
-    }
+    public abstract function saveVars();
+    
+    /**
+     * An abstract function for getting the properties
+     * of all the objects of the same type from the database
+     */
+    public abstract static function getVars();
+    
+    /**
+     * An abstract function for getting the properties
+     * of a single object from the database
+     * according to sku
+     */
+    public abstract static function getVar(int $sku);
 }
