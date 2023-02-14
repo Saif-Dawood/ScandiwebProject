@@ -164,7 +164,7 @@ class Table
 
         // Query to delete row
         $sql = "DELETE FROM " . $this->name . " WHERE sku = '$sku'";
-        echo $sql . "\n";
+        // echo $sql . "\n";
 
         // Try to delete row
         try {

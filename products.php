@@ -1,10 +1,10 @@
 <?php
-require "Vendor\\Database\\Database.php";
-require "Vendor\\Database\\Table.php";
-require "Vendor\\Item.php";
-require "Vendor\\DVD.php";
-require "Vendor\\Book.php";
-require "Vendor\\Furn.php";
+require "Vendor/Database/Database.php";
+require "Vendor/Database/Table.php";
+require "Vendor/Item.php";
+require "Vendor/DVD.php";
+require "Vendor/Book.php";
+require "Vendor/Furn.php";
 
 use Vendor\Database\Database;
 use Vendor\Database\Table;
@@ -13,7 +13,7 @@ use Vendor\Book;
 use Vendor\Furn;
 
 // Create database if not exists
-$db = new Database("scandi");
+$db = new Database("id20302950_scandi");
 
 // Define Columns
 $cols['id'] = array(

@@ -1,9 +1,9 @@
 <?php
 
-require "Vendor\\Item.php";
-require "Vendor\\DVD.php";
-require "Vendor\\Book.php";
-require "Vendor\\Furn.php";
+require "Vendor/Item.php";
+require "Vendor/DVD.php";
+require "Vendor/Book.php";
+require "Vendor/Furn.php";
 
 use Vendor\Item;
 use Vendor\DVD;

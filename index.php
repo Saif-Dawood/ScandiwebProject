@@ -1,3 +1,4 @@
+<?php ob_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +32,8 @@
                     $obj->setChecked(array_key_exists($obj->getSku(), $_POST));
                 }
                 Item::massDelete($table, $objs);
+                header("refresh: 0");
+                ob_end_flush();
             }
         }
         ?>

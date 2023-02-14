@@ -1,10 +1,12 @@
 <?php
-require "Vendor\\Database\\Database.php";
-require "Vendor\\Database\\Table.php";
-require "Vendor\\Item.php";
-require "Vendor\\DVD.php";
-require "Vendor\\Book.php";
-require "Vendor\\Furn.php";
+ob_start();
+
+require "Vendor/Database/Database.php";
+require "Vendor/Database/Table.php";
+require "Vendor/Item.php";
+require "Vendor/DVD.php";
+require "Vendor/Book.php";
+require "Vendor/Furn.php";
 
 use Vendor\Database\Database;
 use Vendor\Database\Table;
@@ -32,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $Err = "Missing required fields";
     } else {
         // Create database if not exists
-        $db = new Database("scandi");
+        $db = new Database("id20302950_scandi");
 
         // Define Columns
         $cols['id'] = array(
@@ -109,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $Err = "";
                 header("refresh: 0; url = index.php");
+                ob_end_flush();
             }
         }
     }

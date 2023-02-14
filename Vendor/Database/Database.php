@@ -12,8 +12,8 @@ use mysqli;
 class Database
 {
     private $sname = "localhost";
-    private $uname = "saif";
-    private $pass = "qwer";
+    private $uname = "id20302950_saif";
+    private $pass = "Iamawesome777&&&";
     private $db;
 
     public function __construct(string $db)

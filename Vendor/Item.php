@@ -71,7 +71,6 @@ abstract class Item
                 }
             }
         }
-        header("refresh: 0");
     }
 
     /**
