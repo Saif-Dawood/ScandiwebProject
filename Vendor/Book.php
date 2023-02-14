@@ -62,8 +62,10 @@ class Book extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" class=\"delete-checkbox\" 
-                    name=\"$this->sku\"><br>\n
+                <div class=\"checkdiv\">
+                    <input type=\"checkbox\" class=\"delete-checkbox\" 
+                        name=\"$this->sku\"><br>\n
+                </div>
                 <span>$this->sku</span><br>\n
                 <span>$this->name</span><br>\n
                 <span>$this->price\$</span><br>\n
@@ -79,13 +81,14 @@ class Book extends Item
     public static function printHtml()
     {
         echo "
-            <div>\n
+            <div class=\"attrib\">\n
                 <label for=\"weight\">Weight (KG): </label>\n
                 <input type=\"text\" name=\"weight\" id=\"weight\">\n
                 <span for=\"weight\" class=\"text-danger\">\n
                     *
                 </span>\n
-            </div>\n
+                </div>\n
+                <p style=\"font-weight:bold;\">Please provide the weight of the book</p>\n
         ";
     }
 }

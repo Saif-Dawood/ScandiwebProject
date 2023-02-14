@@ -62,8 +62,10 @@ class DVD extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" class=\"delete-checkbox\" 
-                    name=\"$this->sku\"><br>\n
+                <div class=\"checkdiv\">
+                    <input type=\"checkbox\" class=\"delete-checkbox\" 
+                        name=\"$this->sku\"><br>\n
+                </div>
                 <span>$this->sku</span><br>\n
                 <span>$this->name</span><br>\n
                 <span>$this->price\$</span><br>\n
@@ -79,13 +81,14 @@ class DVD extends Item
     public static function printHtml()
     {
         echo "
-            <div>\n
+            <div class=\"attrib\">\n
                 <label for=\"size\">Size (MB): </label>\n
                 <input type=\"text\" name=\"size\" id=\"size\">\n
                 <span for=\"size\" class=\"text-danger\">\n
                     *
                 </span>\n
             </div>\n
+            <p style=\"font-weight:bold;\">Please provide the size of the disc</p>\n
         ";
     }
 }

@@ -62,8 +62,10 @@ class Furn extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" class=\"delete-checkbox\" 
-                    name=\"$this->sku\"><br>\n
+                <div class=\"checkdiv\">
+                    <input type=\"checkbox\" class=\"delete-checkbox\" 
+                        name=\"$this->sku\"><br>\n
+                </div>
                 <span>$this->sku</span><br>\n
                 <span>$this->name</span><br>\n
                 <span>$this->price\$</span><br>\n
@@ -79,7 +81,7 @@ class Furn extends Item
     public static function printHtml()
     {
         echo "
-            <div>\n
+            <div class=\"attrib\">\n
                 <label for=\"height\">Height: </label>\n
                 <input type=\"text\" name=\"height\" id=\"height\">\n
                 <span for=\"height\" class=\"text-danger\">\n
@@ -87,7 +89,7 @@ class Furn extends Item
                 </span>\n
             </div>\n
 
-            <div>\n
+            <div class=\"attrib\">\n
                 <label for=\"width\">Width: </label>\n
                 <input type=\"text\" name=\"width\" id=\"width\">\n
                 <span for=\"width\" class=\"text-danger\">\n
@@ -95,13 +97,14 @@ class Furn extends Item
                 </span>\n
             </div>\n
 
-            <div>\n
+            <div class=\"attrib\">\n
                 <label for=\"length\">Length: </label>\n
                 <input type=\"text\" name=\"length\" id=\"length\">\n
                 <span for=\"length\" class=\"text-danger\">\n
                     *
                 </span>\n
             </div>\n
+            <p style=\"font-weight:bold;\">Please provide the dimensions</p>\n
         ";
     }
 }

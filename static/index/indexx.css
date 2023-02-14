@@ -1,0 +1,62 @@
+input[type=text] {
+  box-shadow: none;
+  border-radius: 5px;
+  border: 1px solid;
+  height: 20px;
+  width: 200px;
+}
+input[type=submit] input[type=button] {
+  box-shadow: none;
+  border-radius: 2px;
+  border: 1px solid;
+  height: 10px;
+}
+input[type=submit] input[type=button]:hover {
+  border: 1px solid blue;
+}
+
+form {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 5px;
+}
+
+header {
+  padding: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: auto 80px 120px;
+  column-gap: 10px;
+  border-bottom: 2px solid black;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 5px;
+  text-align: center;
+  width: 100%;
+  border-top: 2px solid black;
+}
+
+.item {
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  padding-bottom: 20px;
+  width: 200px;
+  background-color: white;
+}
+
+.checkdiv {
+  text-align: left;
+  padding: 5px;
+  padding-bottom: 0px;
+}
+
+/*# sourceMappingURL=index.css.map */
