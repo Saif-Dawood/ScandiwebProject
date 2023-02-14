@@ -51,12 +51,27 @@ abstract class Item
     }
 
     /**
+     * Getter for sku
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
      * A function used for deleting
      * the checked items
      */
-    public static function massDelete()
+    public static function massDelete(Table $table, array $items)
     {
-
+        foreach($items as $item) {
+            if ($item->checked) {
+                if ($table->delRow($item->sku) == false) {
+                    echo "failed";
+                }
+            }
+        }
+        header("refresh: 0");
     }
 
     /**
@@ -70,4 +85,10 @@ abstract class Item
      * the object in the form
      */
     public abstract function printItem();
+
+    /**
+     * An abstract function for getting the
+     * html for the different properties between childs
+     */
+    public static abstract function printHtml();
 }

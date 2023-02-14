@@ -10,20 +10,33 @@
 </head>
 
 <body>
-    <form action="index.php" method="post">
-        <header>
-            <h1>Product List</h1>
-            <input type="button" 
-                onclick="window.location.href='addproduct.php';"
-                value="ADD">
-            <input type="submit" name="massDelete"
-                id="delete-product-btn" value="MASS DELETE">
-        </header>
-        
-        <?php require("products.php")?>
+    <header>
+        <h1>Product List</h1>
+        <input type="button" 
+            onclick="window.location.href='addproduct.php';" value="ADD">
+        <input type="submit" name="massDelete" 
+            id="delete-product-btn" value="MASS DELETE" form="item_form">
+    </header>
+    <form action="index.php" method="post" id="item_form">
 
-        <footer>Scandiweb Test Assignment</footer>
+        <?php require("products.php") ?>
+
+        <?php
+
+        use Vendor\Item;
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (array_key_exists("massDelete", $_POST)) {
+                foreach ($objs as $obj) {
+                    $obj->setChecked(array_key_exists($obj->getSku(), $_POST));
+                }
+                Item::massDelete($table, $objs);
+            }
+        }
+        ?>
+
     </form>
+    <footer>Scandiweb Test Assignment</footer>
 </body>
 
 </html>

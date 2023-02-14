@@ -26,26 +26,18 @@ use Vendor\Item;
 class Furn extends Item
 {
     protected $dimensions;
-    protected $height;
-    protected $width;
-    protected $length;
 
     public function __construct(
         string $sku,
         string $name,
         float $price,
-        float $height,
-        float $width,
-        float $length
+        string $dimensions
     ) {
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
-        $this->height = $height;
-        $this->width = $width;
-        $this->length = $length;
-        $this->dimensions = "$height" . "x" . "$width" . "x" . "$length";
-        $this->dbdiff = "$height" . ", " . "$width" . ", " . "$length";
+        $this->dimensions = $dimensions;
+        $this->dbdiff = $dimensions;
     }
 
     /**
@@ -70,13 +62,46 @@ class Furn extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" class=\"delete-checkbox\" " .
-                    ($this->checked ? "checked" : "") . "><br>\n
+                <input type=\"checkbox\" class=\"delete-checkbox\" 
+                    name=\"$this->sku\"><br>\n
                 <label>$this->sku</label><br>\n
                 <label>$this->name</label><br>\n
                 <label>$this->price\$</label><br>\n
-                <label>Dimensions: $this->dimensions KG</label><br>\n
+                <label>Dimensions: $this->dimensions</label><br>\n
             </div>
+        ";
+    }
+
+    /**
+     * A function for getting the
+     * html for the different properties
+     */
+    public static function printHtml()
+    {
+        echo "
+            <div>\n
+                <label for=\"height\">Height: </label>\n
+                <input type=\"text\" name=\"height\" id=\"height\">\n
+                <span for=\"height\" class=\"text-danger\">\n
+                    *
+                </span>\n
+            </div>\n
+
+            <div>\n
+                <label for=\"width\">Width: </label>\n
+                <input type=\"text\" name=\"width\" id=\"width\">\n
+                <span for=\"width\" class=\"text-danger\">\n
+                    *
+                </span>\n
+            </div>\n
+
+            <div>\n
+                <label for=\"length\">Length: </label>\n
+                <input type=\"text\" name=\"length\" id=\"length\">\n
+                <span for=\"length\" class=\"text-danger\">\n
+                    *
+                </span>\n
+            </div>\n
         ";
     }
 }

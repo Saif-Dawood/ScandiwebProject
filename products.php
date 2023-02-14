@@ -39,18 +39,17 @@ $objs = array();
 if ($rows != false && $rows->num_rows != 0) {
     $i = 0;
     while ($row = $rows->fetch_assoc()) {
-        eval(
-            " \$objs[$i] = new " . $row['type'] . "(" . 
-            $row['sku'] . ", " .
-            $row['name'] . ", " .
-            $row['price'] . ", " .
-            $row['dbdiff'] . ");"
+        $type = "Vendor\\" . $row['type'];
+        $objs[$i] = new $type(
+            $row['sku'],
+            $row['name'],
+            $row['price'],
+            $row['dbdiff']
         );
         $objs[$i]->printItem();
         $i++;
     }
-}
-else {
-    echo "<h2 style=\"text-align:'center'\">
+} else {
+    echo "<h2>
         No items found in the database</h2>";
 }

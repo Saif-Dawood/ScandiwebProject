@@ -62,13 +62,30 @@ class Book extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" class=\"delete-checkbox\" " .
-                    ($this->checked ? "checked" : "") . "><br>\n
+                <input type=\"checkbox\" class=\"delete-checkbox\" 
+                    name=\"$this->sku\"><br>\n
                 <label>$this->sku</label><br>\n
                 <label>$this->name</label><br>\n
                 <label>$this->price\$</label><br>\n
                 <label>Weight: $this->weight KG</label><br>\n
             </div>
+        ";
+    }
+
+    /**
+     * A function for getting the
+     * html for the different properties
+     */
+    public static function printHtml()
+    {
+        echo "
+            <div>\n
+                <label for=\"weight\">Weight (KG): </label>\n
+                <input type=\"text\" name=\"weight\" id=\"weight\">\n
+                <span for=\"weight\" class=\"text-danger\">\n
+                    *
+                </span>\n
+            </div>\n
         ";
     }
 }

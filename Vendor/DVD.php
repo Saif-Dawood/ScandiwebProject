@@ -62,13 +62,30 @@ class DVD extends Item
     {
         echo "
             <div class=\"item\">\n
-                <input type=\"checkbox\" class=\"delete-checkbox\" " .
-                    ($this->checked ? "checked" : "") . "><br>\n
+                <input type=\"checkbox\" class=\"delete-checkbox\" 
+                    name=\"$this->sku\"><br>\n
                 <label>$this->sku</label><br>\n
                 <label>$this->name</label><br>\n
                 <label>$this->price\$</label><br>\n
-                <label>Size: $this->size KG</label><br>\n
+                <label>Size: $this->size MB</label><br>\n
             </div>
+        ";
+    }
+
+    /**
+     * A function for getting the
+     * html for the different properties
+     */
+    public static function printHtml()
+    {
+        echo "
+            <div>\n
+                <label for=\"size\">Size (MB): </label>\n
+                <input type=\"text\" name=\"size\" id=\"size\">\n
+                <span for=\"size\" class=\"text-danger\">\n
+                    *
+                </span>\n
+            </div>\n
         ";
     }
 }

@@ -1,0 +1,37 @@
+input[type=text] {
+  box-shadow: none;
+  border-radius: 5px;
+  border: 1px solid;
+  height: 20px;
+  width: 200px;
+}
+input[type=submit] input[type=button] {
+  box-shadow: none;
+  border-radius: 2px;
+  border: 1px solid;
+  height: 10px;
+}
+input[type=submit] input[type=button]:hover {
+  border: 1px solid blue;
+}
+
+form {
+  padding: 20px;
+  display: inline-block;
+}
+
+header {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: auto 100px 100px;
+  border-bottom: 1px solid black;
+}
+
+footer {
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid black;
+}
+
+/*# sourceMappingURL=addproduct.css.map */

@@ -103,6 +103,7 @@ class Table
         // Try connecting
         $conn = new mysqli();
         if ($this->db->connectDB($conn) === false) {
+            // echo "failed to connect";
             return false;
         }
 
@@ -124,12 +125,48 @@ class Table
             if ($i != 0) {
                 $sql .= ", ";
             }
-            $sql .= $val;
+            if(gettype($val)=="string") {
+                $sql .= "'$val'";
+            } else {
+                $sql .= $val;
+            }
             $i++;
         }
         $sql .= ")";
 
         // Try to add row
+        try {
+            $result = $conn->query($sql);
+        } catch (Exception $e) {
+            $conn->close();
+            // echo $sql . "<br>";
+            // echo $e->getMessage();
+            return false;
+        }
+
+        // Saving the changes
+        $conn->close();
+
+        // No errors
+        return true;
+    }
+
+    /**
+     * 
+     */
+    public function delRow(string $sku)
+    {
+        // Try connecting
+        $conn = new mysqli();
+        if ($this->db->connectDB($conn) === false) {
+            return false;
+        }
+
+        // Query to delete row
+        $sql = "DELETE FROM " . $this->name . " WHERE sku = '$sku'";
+        echo $sql . "\n";
+
+        // Try to delete row
         try {
             $result = $conn->query($sql);
         } catch (Exception $e) {
