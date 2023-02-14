@@ -64,10 +64,10 @@ class Book extends Item
             <div class=\"item\">\n
                 <input type=\"checkbox\" class=\"delete-checkbox\" 
                     name=\"$this->sku\"><br>\n
-                <label>$this->sku</label><br>\n
-                <label>$this->name</label><br>\n
-                <label>$this->price\$</label><br>\n
-                <label>Weight: $this->weight KG</label><br>\n
+                <span>$this->sku</span><br>\n
+                <span>$this->name</span><br>\n
+                <span>$this->price\$</span><br>\n
+                <span>Weight: $this->weight KG</span><br>\n
             </div>
         ";
     }

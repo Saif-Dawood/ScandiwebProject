@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!preg_match("/^[a-zA-Z0-9-]*$/", $sku)) {
             $Err = "SKU: Only letters and numbers are allowed";
             $oof = 0;
-        } else if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+        } else if (!preg_match("/^[a-zA-Z0-9-' ]*$/", $name)) {
             $Err = "Name: Only letters and whitespaces are allowed";
             $oof = 0;
         } else if (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
@@ -174,7 +174,7 @@ function test_input($data)
 
             <div>
                 <label for="type">Type Switcher: </label>
-                <select name="type" id="type" onchange="displayAttr(this.value)">
+                <select name="type" id="productType" onchange="displayAttr(this.value)">
                     <option value="" disabled selected>
                         Type Switcher
                     </option>

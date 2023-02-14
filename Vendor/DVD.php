@@ -64,10 +64,10 @@ class DVD extends Item
             <div class=\"item\">\n
                 <input type=\"checkbox\" class=\"delete-checkbox\" 
                     name=\"$this->sku\"><br>\n
-                <label>$this->sku</label><br>\n
-                <label>$this->name</label><br>\n
-                <label>$this->price\$</label><br>\n
-                <label>Size: $this->size MB</label><br>\n
+                <span>$this->sku</span><br>\n
+                <span>$this->name</span><br>\n
+                <span>$this->price\$</span><br>\n
+                <span>Size: $this->size MB</span><br>\n
             </div>
         ";
     }
