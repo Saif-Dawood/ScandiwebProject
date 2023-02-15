@@ -13,4 +13,16 @@ use Vendor\Furn;
 $type = $_REQUEST["t"];
 
 $type = "Vendor\\" . $type;
-$type::printHtml();
+
+$arr['size'] = "";
+$arr['sizeErr'] = "";
+$arr['weight'] = "";
+$arr['weightErr'] = "";
+$arr['height'] = "";
+$arr['heightErr'] = "";
+$arr['width'] = "";
+$arr['widthErr'] = "";
+$arr['length'] = "";
+$arr['lengthErr'] = "";
+
+echo $type::printHtml($arr);

@@ -89,5 +89,5 @@ abstract class Item
      * An abstract function for getting the
      * html for the different properties between childs
      */
-    public static abstract function printHtml();
+    public static abstract function printHtml($output);
 }

@@ -60,7 +60,7 @@ class DVD extends Item
      */
     public function printItem()
     {
-        echo "
+        return "
             <div class=\"item\">\n
                 <div class=\"checkdiv\">
                     <input type=\"checkbox\" class=\"delete-checkbox\" 
@@ -78,14 +78,14 @@ class DVD extends Item
      * A function for getting the
      * html for the different properties
      */
-    public static function printHtml()
+    public static function printHtml($output)
     {
-        echo "
+        return "
             <div class=\"attrib\">\n
                 <label for=\"size\">Size (MB): </label>\n
-                <input type=\"text\" name=\"size\" id=\"size\">\n
+                <input type=\"text\" name=\"size\" id=\"size\" value=\"" . $output['size'] . "\">\n
                 <span for=\"size\" class=\"text-danger\">\n
-                    *
+                    * " . $output['sizeErr'] . "
                 </span>\n
             </div>\n
             <p style=\"font-weight:bold;\">Please provide the size of the disc</p>\n

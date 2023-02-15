@@ -46,7 +46,7 @@ if ($rows != false && $rows->num_rows != 0) {
             $row['price'],
             $row['dbdiff']
         );
-        $objs[$i]->printItem();
+        echo $objs[$i]->printItem();
         $i++;
     }
 } else {

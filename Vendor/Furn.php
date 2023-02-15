@@ -60,7 +60,7 @@ class Furn extends Item
      */
     public function printItem()
     {
-        echo "
+        return "
             <div class=\"item\">\n
                 <div class=\"checkdiv\">
                     <input type=\"checkbox\" class=\"delete-checkbox\" 
@@ -78,30 +78,30 @@ class Furn extends Item
      * A function for getting the
      * html for the different properties
      */
-    public static function printHtml()
+    public static function printHtml($output)
     {
-        echo "
+        return "
             <div class=\"attrib\">\n
                 <label for=\"height\">Height: </label>\n
-                <input type=\"text\" name=\"height\" id=\"height\">\n
+                <input type=\"text\" name=\"height\" id=\"height\" value=\"" . $output['height'] . "\">\n
                 <span for=\"height\" class=\"text-danger\">\n
-                    *
+                    * " . $output['heightErr'] . "
                 </span>\n
             </div>\n
 
             <div class=\"attrib\">\n
                 <label for=\"width\">Width: </label>\n
-                <input type=\"text\" name=\"width\" id=\"width\">\n
+                <input type=\"text\" name=\"width\" id=\"width\" value=\"" . $output['width'] . "\">\n
                 <span for=\"width\" class=\"text-danger\">\n
-                    *
+                    * " . $output['widthErr'] . "
                 </span>\n
             </div>\n
 
             <div class=\"attrib\">\n
                 <label for=\"length\">Length: </label>\n
-                <input type=\"text\" name=\"length\" id=\"length\">\n
+                <input type=\"text\" name=\"length\" id=\"length\" value=\"" . $output['length'] . "\">\n
                 <span for=\"length\" class=\"text-danger\">\n
-                    *
+                    * " . $output['lengthErr'] . "
                 </span>\n
             </div>\n
             <p style=\"font-weight:bold;\">Please provide the dimensions</p>\n

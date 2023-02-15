@@ -60,7 +60,7 @@ class Book extends Item
      */
     public function printItem()
     {
-        echo "
+        return "
             <div class=\"item\">\n
                 <div class=\"checkdiv\">
                     <input type=\"checkbox\" class=\"delete-checkbox\" 
@@ -78,17 +78,17 @@ class Book extends Item
      * A function for getting the
      * html for the different properties
      */
-    public static function printHtml()
+    public static function printHtml($output)
     {
-        echo "
+        return "
             <div class=\"attrib\">\n
                 <label for=\"weight\">Weight (KG): </label>\n
-                <input type=\"text\" name=\"weight\" id=\"weight\">\n
+                <input type=\"text\" name=\"weight\" id=\"weight\" value=\"" . $output['weight'] . "\">\n
                 <span for=\"weight\" class=\"text-danger\">\n
-                    *
+                    * " . $output['weightErr'] . "
                 </span>\n
-                </div>\n
-                <p style=\"font-weight:bold;\">Please provide the weight of the book</p>\n
+            </div>\n
+            <p style=\"font-weight:bold;\">Please provide the weight of the book</p>\n
         ";
     }
 }
