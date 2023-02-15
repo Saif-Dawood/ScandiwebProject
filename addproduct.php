@@ -206,12 +206,12 @@ function test_input($data)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/addpro/addproduct.css">
     <script src="static/addpro/addproduct.js"></script>
-    <title>Product List</title>
+    <title>Add Product</title>
 </head>
 
 <body>
     <header>
-        <h1>Product List</h1>
+        <h1>Add Product</h1>
         <button type="submit" form="product_form" name="save" id="save" class="btn btn-outline-primary">Save</button>
         <input type="button" onclick="window.location.href='index.php';" value="Cancel" class="btn btn-outline-secondary">
     </header>
