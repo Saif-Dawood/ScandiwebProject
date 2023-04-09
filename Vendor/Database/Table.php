@@ -6,14 +6,14 @@ use Exception;
 use mysqli;
 
 /**
- * A class for dealing with database Tables
- * 
+ * A class for dealing with database tables
+ *
  * Properties:
  *      db -> database
  *      name -> table's name
  *      cols -> an array:
  *                  key: column name
- *                  value: column types and constrains
+ *                  value: column types and constraints
  */
 class Table
 {
@@ -21,11 +21,19 @@ class Table
     private $name;
     private $cols;
 
+    /**
+     * Connects to the database.
+     *
+     * @param Database $db
+     * @param string $name
+     * @param array $cols
+     */
     public function __construct(Database $db, string $name, array $cols)
     {
         $this->db = $db;
         $this->name = $name;
         $this->cols = $cols;
+
         $conn = new mysqli();
 
         if ($this->db->connectDB($conn) === false) {
@@ -36,7 +44,7 @@ class Table
         $sql = "CREATE TABLE IF NOT EXISTS " . $this->name . " (";
         $i = 0;
         foreach ($this->cols as $col => $conds) {
-            if ($i != 0) {
+            if ($i !== 0) {
                 $sql .= ", ";
             }
             $sql .= $col;
@@ -57,15 +65,14 @@ class Table
 
         // saving the changes
         $conn->close();
-
-        // No errors
-        return;
     }
 
     /**
      * A function to get all rows of this table
+     * 
+     * @return \mysqli_result|bool
      */
-    public function getRows()
+    public function getRows(): \mysqli_result|bool
     {
         // Try connecting
         $conn = new mysqli();
@@ -92,46 +99,57 @@ class Table
     }
 
     /**
-     * a function to insert a new row into this table
-     * 
-     * cols_vals -> an array:
-     *                  key: column name
-     *                  value: value to be inserted
+     * Inserts a new row into this table.
+     *
+     * @param array $cols_vals An array containing the column names and values to be inserted.
+     *                         Each key is the column name and each value is the value to be inserted.
+     *
+     * @return bool True if the row was successfully inserted, false otherwise.
      */
-    public function addRow(array $cols_vals)
+    public function addRow(array $cols_vals): bool
     {
         // Try connecting
         $conn = new mysqli();
-        if ($this->db->connectDB($conn) === false) {
+
+        if (!$this->db->connectDB($conn)) {
             // echo "failed to connect";
             return false;
         }
 
         // Query to add row
         $sql = "INSERT INTO " . $this->name . "(";
+
         // Columns
         $i = 0;
+
         foreach ($cols_vals as $col => $val) {
-            if ($i != 0) {
+            if ($i !== 0) {
                 $sql .= ", ";
             }
+
             $sql .= $col;
             $i++;
         }
+
         $sql .= ") VALUES (";
+
         // Values
         $i = 0;
+
         foreach ($cols_vals as $col => $val) {
-            if ($i != 0) {
+            if ($i !== 0) {
                 $sql .= ", ";
             }
-            if(gettype($val)=="string") {
+
+            if (gettype($val) === "string") {
                 $sql .= "'$val'";
             } else {
                 $sql .= $val;
             }
+
             $i++;
         }
+
         $sql .= ")";
 
         // Try to add row
@@ -152,13 +170,18 @@ class Table
     }
 
     /**
-     * 
+     * Deletes a row from this table.
+     *
+     * @param string $sku The SKU of the row to be deleted.
+     *
+     * @return bool True if the row was successfully deleted, false otherwise.
      */
-    public function delRow(string $sku)
+    public function delRow(string $sku): bool
     {
         // Try connecting
         $conn = new mysqli();
-        if ($this->db->connectDB($conn) === false) {
+
+        if (!$this->db->connectDB($conn)) {
             return false;
         }
 

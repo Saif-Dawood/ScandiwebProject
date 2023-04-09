@@ -11,20 +11,26 @@ use mysqli;
  */
 class Database
 {
-    private $sname = "localhost";
-    private $uname = "id20302950_saif";
-    private $pass = "Iamawesome777&&&";
+    private const SNAME = "localhost";
+    private const UNAME = "id20302950_saif";
+    private const PASS = "Iamawesome777&&&";
     private $db;
 
+    /**
+     * Creates a database if not exists with name "$db"
+     *
+     * @param string $db
+     */
     public function __construct(string $db)
     {
         $this->db = $db;
+
         // Connecting without a database
         try {
             $conn = new mysqli(
-                $this->sname,
-                $this->uname,
-                $this->pass
+                self::SNAME,
+                self::UNAME,
+                self::PASS
             );
         } catch (Exception $e) {
             return;
@@ -41,33 +47,31 @@ class Database
             return;
         }
 
-        // saving the changes
+        // Saving the changes
         $conn->close();
-
-        // No errors
-        return;
     }
 
     /**
-     * conn -> connection
-     * sname -> server name (host name)
-     * uname -> username
-     * pass -> password
-     * db -> database name
+     * Connects to the database.
+     *
+     * @param mysqli $conn The connection object passed by reference.
+     *
+     * @return bool True if the connection is successful, false otherwise.
      */
-    public function connectDB(mysqli &$conn)
+    public function connectDB(mysqli &$conn): bool
     {
         try {
             $conn = new mysqli(
-                $this->sname,
-                $this->uname,
-                $this->pass,
+                self::SNAME,
+                self::UNAME,
+                self::PASS,
                 $this->db
             );
         } catch (Exception $e) {
             $conn->close();
             return false;
         }
+
         return true;
     }
 }
