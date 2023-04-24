@@ -23,7 +23,6 @@
     </header>
     <form action="addproduct.php" method="post" id="product_form">
 
-        <!-- <div class="main"> -->
         <span class="text-danger">* Required fields</span>
         <div class="attrib">
             <label for="sku">SKU: </label>

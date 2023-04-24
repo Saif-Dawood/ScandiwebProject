@@ -101,8 +101,10 @@ class Table
     /**
      * Inserts a new row into this table.
      *
-     * @param array $cols_vals An array containing the column names and values to be inserted.
-     *                         Each key is the column name and each value is the value to be inserted.
+     * @param array $cols_vals An array containing the column names and 
+     *                         values to be inserted. Each key is the
+     *                         column name and each value is the value
+     *                         to be inserted.
      *
      * @return bool True if the row was successfully inserted, false otherwise.
      */
@@ -112,7 +114,6 @@ class Table
         $conn = new mysqli();
 
         if (!$this->db->connectDB($conn)) {
-            // echo "failed to connect";
             return false;
         }
 
@@ -157,8 +158,6 @@ class Table
             $result = $conn->query($sql);
         } catch (Exception $e) {
             $conn->close();
-            // echo $sql . "<br>";
-            // echo $e->getMessage();
             return false;
         }
 
@@ -187,7 +186,6 @@ class Table
 
         // Query to delete row
         $sql = "DELETE FROM " . $this->name . " WHERE sku = '$sku'";
-        // echo $sql . "\n";
 
         // Try to delete row
         try {
