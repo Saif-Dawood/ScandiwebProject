@@ -13,11 +13,13 @@ use Vendor\Book;
 use Vendor\Furn;
 
 // Create database if not exists
-$db = new Database("id20302950_scandi");
+$db = new Database("id20649662_scandi");
 
 // Define Columns
 $cols['id'] = array(
-    "INT(6)", "UNSIGNED", "AUTO_INCREMENT",
+    "INT(6)",
+    "UNSIGNED",
+    "AUTO_INCREMENT",
     "PRIMARY KEY"
 );
 $cols['sku'] = array("VARCHAR(12)", "UNIQUE", "NOT NULL");
@@ -44,7 +46,7 @@ if ($rows != false && $rows->num_rows != 0) {
             $row['sku'],
             $row['name'],
             $row['price'],
-            $row['dbdiff']
+            $row
         );
         echo $objs[$i]->printItem();
         $i++;

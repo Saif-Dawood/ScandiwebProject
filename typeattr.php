@@ -14,15 +14,9 @@ $type = $_REQUEST["t"];
 
 $type = "Vendor\\" . $type;
 
-$arr['size'] = "";
-$arr['sizeErr'] = "";
-$arr['weight'] = "";
-$arr['weightErr'] = "";
-$arr['height'] = "";
-$arr['heightErr'] = "";
-$arr['width'] = "";
-$arr['widthErr'] = "";
-$arr['length'] = "";
-$arr['lengthErr'] = "";
-
-echo $type::printHtml($arr);
+if (class_exists($type))
+    echo $type::printHtml();
+else
+    echo <<<HTML
+    <p style="font-weight:bold;">Quit playing with the html of this file</p>
+    HTML;
