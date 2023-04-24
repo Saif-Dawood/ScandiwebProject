@@ -19,14 +19,22 @@ use Vendor\Database\Table;
  *              for mass delete
  *   - dbdiff: A parameter for storing the different
  *              attributes in the database
+ *   - errors: an array of errors after validation
+ *   - error_count: The no of errors found
  * 
  * Methods:
+ *   - __construct(string $sku,
+ *                 string $name,
+ *                 string $price)
  *   - setChecked(bool $checked)
- *   - getChecked()
+ *   - getSku(): string
+ *   - getErrCount(): int
  *   - massDelete(Table $table, array $items)
- *   - saveObj(Table $table)
- *   - getObj(Table $table, int $sku)
- *   - printItem()
+ *   - static testInput($data)
+ *   - abstract saveObj(Table $table): \mysqli_result|bool
+ *   - abstract printItem(): string;
+ *   - abstract printErrors(): string;
+ *   - abstract printHtml(): string;
  */
 abstract class Item
 {
@@ -35,22 +43,25 @@ abstract class Item
     protected $price;
     protected $checked = false;
     protected $dbdiff;
+    protected $errors = array();
+    protected $error_count;
 
     /**
      * Item constructor.
      *
      * @param string $sku
      * @param string $name
-     * @param float $price
+     * @param string $price
      */
     public function __construct(
         string $sku,
         string $name,
-        float $price
+        string $price
     ) {
         $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
+        $this->error_count = 0;
     }
 
     /**
@@ -64,16 +75,6 @@ abstract class Item
     }
 
     /**
-     * Getter for checked
-     * 
-     * @return bool
-     */
-    public function getChecked(): bool
-    {
-        return $this->checked;
-    }
-
-    /**
      * Getter for sku
      * 
      * @return string
@@ -84,13 +85,21 @@ abstract class Item
     }
 
     /**
+     * Getter for error_count
+     * 
+     * @return int
+     */
+    public function getErrCount(): int
+    {
+        return $this->error_count;
+    }
+
+    /**
      * A function used for deleting
      * the checked items
      * 
      * @param Table $table
      * @param array $items
-     * 
-     * @return void
      */
     public static function massDelete(Table $table, array $items): void
     {
@@ -101,6 +110,14 @@ abstract class Item
                 }
             }
         }
+    }
+
+    protected static function testInput($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
     /**
@@ -123,11 +140,17 @@ abstract class Item
 
     /**
      * An abstract function for getting the
-     * html for the different properties between children
-     * 
-     * @param array $output
+     * html for the different fields of the childs
      * 
      * @return string
      */
-    public static abstract function printHtml(array $output): string;
+    public abstract function printErrors(): string;
+
+    /**
+     * An abstract function for getting the
+     * html for the different fields of the childs
+     * 
+     * @return string
+     */
+    public static abstract function printHtml(): string;
 }

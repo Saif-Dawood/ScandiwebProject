@@ -8,29 +8,50 @@ use Vendor\Database\Table;
  * A class for Book.
  *
  * This is a child class to the abstract class Item
- * which contains a new property (weight).
+ * 
+ * 
+ * 
+ * Properties:
+ *   - weight: weight of the book in (KG)
+ * 
+ * Methods:
+ *   - __construct(string $sku,
+ *                 string $name,
+ *                 string $price,
+ *                 array $data)
+ *   - saveObj(Table $table): \mysqli_result|bool
+ *   - printItem(): string
+ *   - printErrors(): string
+ *   - printHtml(): string
+ *   - validate(): array
+ *   - validateWeight()
  */
 class Book extends Item
 {
-    protected float $weight;
+    protected $weight;
 
     /**
      * Book Constructor
      *
      * @param string $sku
      * @param string $name
-     * @param float $price
-     * @param float $weight
+     * @param string $price
+     * @param array $data
+     * 
+     * @override
      */
     public function __construct(
         string $sku,
         string $name,
-        float $price,
-        float $weight
+        string $price,
+        array $data
     ) {
         parent::__construct($sku, $name, $price);
-        $this->weight = $weight;
-        $this->dbdiff = "$weight";
+        if (array_key_exists('weight', $data))
+            $this->weight = $data['weight'];
+        else
+            $this->weight = $data['dbdiff'];
+        $this->dbdiff = $this->weight;
     }
 
     /**
@@ -40,6 +61,8 @@ class Book extends Item
      * @param Table $table
      *
      * @return \mysqli_result|bool
+     * 
+     * @override
      */
     public function saveObj(Table $table): \mysqli_result|bool
     {
@@ -58,6 +81,8 @@ class Book extends Item
      * in index.php.
      *
      * @return string
+     * 
+     * @override
      */
     public function printItem(): string
     {
@@ -78,22 +103,83 @@ class Book extends Item
     /**
      * A function for getting the
      * html for the different properties.
-     *
-     * @param array $output
      * 
      * @return string
+     * 
+     * @override
      */
-    public static function printHtml(array $output): string
+    public function printErrors(): string
     {
         return <<<HTML
             <div class="attrib">
                 <label for="weight">Weight (KG): </label>
-                <input type="text" name="weight" id="weight" value="{$output['weight']}">
+                <input type="text" name="weight" id="weight" value="{$this->weight}">
                 <span for="weight" class="text-danger">
-                    * {$output['weightErr']}
+                    * {$this->errors['weight']}
                 </span>
             </div>
             <p style="font-weight:bold;">Please provide the weight of the book</p>
         HTML;
+    }
+
+    /**
+     * A function for getting the
+     * html for the different fields of the childs
+     * 
+     * @return string
+     */
+    public static function printHtml(): string
+    {
+        return <<<HTML
+            <div class="attrib">
+                <label for="weight">Weight (KG): </label>
+                <input type="text" name="weight" id="weight" value="">
+                <span for="weight" class="text-danger">
+                    *
+                </span>
+            </div>
+            <p style="font-weight:bold;">Please provide the weight of the book</p>
+        HTML;
+    }
+
+    /**
+     * A function that validates items before dealing with them
+     * 
+     * @return array
+     */
+    public function validate(): array
+    {
+        $this->validateWeight();
+
+        return $this->errors;
+    }
+
+    /**
+     * Validator for Weight
+     *
+     */
+    private function validateWeight()
+    {
+        $this->error_count++;
+        if (empty($this->weight)) {
+            $this->errors['weight'] = "Weight is required";
+            return;
+        }
+
+        $this->weight = $this::testInput($this->weight);
+
+        if (!filter_var($this->weight, FILTER_VALIDATE_FLOAT)) {
+            $this->errors['weight'] = "Only decimal numbers are allowed";
+            return;
+        }
+
+        $this->weight = (float) $this->weight;
+
+        if ($this->weight <= 0)
+            $this->errors['weight'] = "Only positive numbers are allowed";
+        else {
+            $this->errors['weight'] = "";
+            $this->error_count--;
+        }
     }
 }

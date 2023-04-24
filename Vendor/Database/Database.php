@@ -8,18 +8,29 @@ use mysqli;
 /**
  * A class for dealing with databases
  * BUT with a constant host name, username, and password
+ * 
+ * 
+ * 
+ * Properties:
+ *   - SNAME: Servername (constant)
+ *   - UNAME: Username (constant)
+ *   - PASS: Password (constant)
+ *   - db: Database name
+ * 
+ * Methods:
+ *   - connectDB(mysqli &$conn): bool
  */
 class Database
 {
     private const SNAME = "localhost";
-    private const UNAME = "id20302950_saif";
-    private const PASS = "Iamawesome777&&&";
+    private const UNAME = "id20649662_saif";
+    private const PASS = "wKF8rZ1VS8@G(&gTePop";
     private $db;
 
     /**
      * Creates a database if not exists with name "$db"
      *
-     * @param string $db
+     * @param string $db The database name
      */
     public function __construct(string $db)
     {

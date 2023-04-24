@@ -12,16 +12,19 @@ use Vendor\Item;
  * which contains a new property (size)
  *
  * Properties:
- *     size: size of the DVD (MB)
+ *   - size: size of the DVD (MB)
  *
  * Methods:
- *     __construct(string $sku,
- *                 string $name,
- *                 float $price,
- *                 float $size)
- *     saveObj(Table $table)
- *     getObj(Table $table, int $sku)
- *     printItem()
+ *   - __construct(string $sku,
+ *   -             string $name,
+ *   -             string $price,
+ *   -             array $data)
+ *   - saveObj(Table $table): \mysqli_result|bool
+ *   - printItem(): string
+ *   - printErrors(): string
+ *   - printHtml(): string
+ *   - validate(): array
+ *   - validateSize()
  */
 class DVD extends Item
 {
@@ -32,18 +35,23 @@ class DVD extends Item
      * 
      * @param string $sku
      * @param string $name
-     * @param float $price
-     * @param float $size
+     * @param string $price
+     * @param array $data
+     * 
+     * @override
      */
     public function __construct(
         string $sku,
         string $name,
-        float $price,
-        float $size
+        string $price,
+        array $data
     ) {
         parent::__construct($sku, $name, $price);
-        $this->size = $size;
-        $this->dbdiff = "$size";
+        if (array_key_exists('size', $data))
+            $this->size = $data['size'];
+        else
+            $this->size = $data['dbdiff'];
+        $this->dbdiff = $this->size;
     }
 
     /**
@@ -53,6 +61,8 @@ class DVD extends Item
      * @param Table $table
      * 
      * @return \mysqli_result|bool
+     * 
+     * @override
      */
     public function saveObj(Table $table): \mysqli_result|bool
     {
@@ -70,6 +80,8 @@ class DVD extends Item
      * in index.php
      * 
      * @return string
+     * 
+     * @override
      */
     public function printItem(): string
     {
@@ -85,27 +97,89 @@ class DVD extends Item
             </div>
         HTML;
     }
-    
+
 
     /**
      * A function for getting the
      * html for the different properties
      * 
-     * @param array $output
-     * 
      * @return string
+     * 
+     * @override
      */
-    public static function printHtml(array $output): string
+    public function printErrors(): string
     {
         return <<<HTML
             <div class="attrib">
                 <label for="size">Size (MB): </label>
-                <input type="text" name="size" id="size" value="{$output['size']}">
+                <input type="text" name="size" id="size" value="{$this->size}">
                 <span for="size" class="text-danger">
-                    * {$output['sizeErr']}
+                    * {$this->errors['size']}
                 </span>
             </div>
             <p style="font-weight:bold;">Please provide the size of the disc</p>
         HTML;
+    }
+
+    /**
+     * A function for getting the
+     * html for the different fields of the childs
+     * 
+     * @return string
+     */
+    public static function printHtml(): string
+    {
+
+        return <<<HTML
+            <div class="attrib">
+                <label for="size">Size (MB): </label>
+                <input type="text" name="size" id="size" value="">
+                <span for="size" class="text-danger">
+                    *
+                </span>
+            </div>
+            <p style="font-weight:bold;">Please provide the size of the disc</p>
+        HTML;
+    }
+
+    /**
+     * A function that validates items before dealing with them
+     * 
+     * @return array
+     */
+    public function validate(): array
+    {
+        $this->validateSize();
+
+        return $this->errors;
+    }
+
+    /**
+     * Validator for Size
+     *
+     */
+    private function validateSize()
+    {
+        $this->error_count++;
+        if (empty($this->size)) {
+            $this->errors['size'] = "Size is required";
+            return;
+        }
+
+        $this->size = $this::testInput($this->size);
+
+        if (!filter_var($this->size, FILTER_VALIDATE_FLOAT)) {
+            $this->errors['size'] = "Only decimal numbers are allowed";
+            return;
+        }
+
+        $this->size = (float) $this->size;
+
+        if ($this->size <= 0)
+            $this->errors['size'] = "Only positive numbers are allowed";
+        else {
+            $this->errors['size'] = "";
+            $this->error_count--;
+        }
     }
 }
