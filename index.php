@@ -1,4 +1,3 @@
-<?php require "massdelete.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +22,8 @@
     <form action="index.php" method="post" id="item_form">
 
         <?php require "products.php" ?>
-        
+        <?php require "massdelete.php" ?>
+
     </form>
     <footer>Scandiweb Test Assignment</footer>
 </body>
