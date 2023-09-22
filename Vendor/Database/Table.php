@@ -165,7 +165,7 @@ class Table
         $conn->close();
 
         // No errors
-        return true;
+        return $result;
     }
 
     /**
@@ -199,6 +199,6 @@ class Table
         $conn->close();
 
         // No errors
-        return true;
+        return $result;
     }
 }
