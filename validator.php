@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($err_no == 0) {
 
         // Create database if not exists
-        $db = new Database("id20649662_scandi");
+        $db = new Database($_SERVER['DBNAME']);
 
         // Define Columns
         $cols['id'] = array(

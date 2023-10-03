@@ -20,7 +20,7 @@ use Vendor\Database\Table;
  *   -             string $name,
  *   -             string $price,
  *   -             array $data)
- *   - saveObj(Table $table): \mysqli_result|bool
+ *   - saveObj(Table $table)
  *   - printItem(): string
  *   - printErrors(): string
  *   - printHtml(): string
@@ -69,11 +69,11 @@ class Furn extends Item
      * 
      * @param Table $table
      * 
-     * @return \mysqli_result|bool
+     * @return
      * 
      * @override
      */
-    public function saveObj(Table $table): \mysqli_result|bool
+    public function saveObj(Table $table)
     {
         $cols_vals = [
             'sku' => $this->sku,

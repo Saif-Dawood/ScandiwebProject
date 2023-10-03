@@ -195,10 +195,10 @@ class ItemValidator
      * a function for refractoring inputs from harmful 
      * html characters
      *
-     * @param mixed $data
-     * @return mixed
+     * @param $data
+     * @return
      */
-    private static function testInput($data): mixed
+    private static function testInput($data)
     {
         $data = trim($data);
         $data = stripslashes($data);

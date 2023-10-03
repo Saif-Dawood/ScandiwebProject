@@ -13,7 +13,7 @@ use Vendor\Book;
 use Vendor\Furn;
 
 // Create database if not exists
-$db = new Database("id20649662_scandi");
+$db = new Database($_SERVER['DBNAME']);
 
 // Define Columns
 $cols['id'] = array(

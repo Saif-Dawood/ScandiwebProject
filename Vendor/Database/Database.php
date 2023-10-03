@@ -22,9 +22,9 @@ use mysqli;
  */
 class Database
 {
-    private const SNAME = "localhost";
-    private const UNAME = "id20649662_saif";
-    private const PASS = "wKF8rZ1VS8@G(&gTePop";
+    private $SNAME;
+    private $UNAME;
+    private $PASS;
     private $db;
 
     /**
@@ -36,12 +36,17 @@ class Database
     {
         $this->db = $db;
 
+        // fetch server values
+        $this->SNAME = $_SERVER['SNAME'];
+        $this->UNAME = $_SERVER['UNAME'];
+        $this->PASS = $_SERVER['PASS'];
+
         // Connecting without a database
         try {
             $conn = new mysqli(
-                self::SNAME,
-                self::UNAME,
-                self::PASS
+                $this->SNAME,
+                $this->UNAME,
+                $this->PASS
             );
         } catch (Exception $e) {
             return;
@@ -73,9 +78,9 @@ class Database
     {
         try {
             $conn = new mysqli(
-                self::SNAME,
-                self::UNAME,
-                self::PASS,
+                $this->SNAME,
+                $this->UNAME,
+                $this->PASS,
                 $this->db
             );
         } catch (Exception $e) {

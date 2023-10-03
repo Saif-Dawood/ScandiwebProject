@@ -31,7 +31,7 @@ use Vendor\Database\Table;
  *   - getErrCount(): int
  *   - massDelete(Table $table, array $items)
  *   - static testInput($data)
- *   - abstract saveObj(Table $table): \mysqli_result|bool
+ *   - abstract saveObj(Table $table)
  *   - abstract printItem(): string;
  *   - abstract printErrors(): string;
  *   - abstract printHtml(): string;
@@ -126,9 +126,9 @@ abstract class Item
      * 
      * @param Table $table
      * 
-     * @return \mysqli_result|bool
+     * @return
      */
-    public abstract function saveObj(Table $table): \mysqli_result|bool;
+    public abstract function saveObj(Table $table);
 
     /**
      * An abstract function for printing

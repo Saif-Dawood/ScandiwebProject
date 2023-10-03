@@ -70,9 +70,9 @@ class Table
     /**
      * A function to get all rows of this table
      * 
-     * @return \mysqli_result|bool
+     * @return
      */
-    public function getRows(): \mysqli_result|bool
+    public function getRows()
     {
         // Try connecting
         $conn = new mysqli();

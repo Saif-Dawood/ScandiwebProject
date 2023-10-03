@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 
 require "Vendor/Item.php";
 require "Vendor/DVD.php";
