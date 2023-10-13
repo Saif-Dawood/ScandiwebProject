@@ -59,8 +59,17 @@ class Furn extends Item
             $this->dbdiff = "$this->length" . 'x' .
                 "$this->width" . 'x' .
                 "$this->height";
-        } else
+        } else if (array_key_exists('dbdiff', $data))
             $this->dbdiff = $data['dbdiff'];
+        else
+            $this->dbdiff = "";
+        $this->print_item = "Dimensions: {$this->dbdiff}";
+        $this->print_add = array(
+            array('lower' => 'height', 'title' => 'Height', 'mu' => ''),
+            array('lower' => 'width', 'title' => 'Width', 'mu' => ''),
+            array('lower' => 'length', 'title' => 'Length', 'mu' => '')
+        );
+        $this->print_description = "Please provide the dimensions";
     }
 
     /**

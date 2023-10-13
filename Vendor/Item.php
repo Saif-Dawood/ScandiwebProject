@@ -43,6 +43,9 @@ abstract class Item
     protected $price;
     protected $checked = false;
     protected $dbdiff;
+    public $print_item;
+    public $print_add;
+    public $print_description;
     protected $errors = array();
     protected $error_count;
 

@@ -48,7 +48,17 @@ if ($rows != false && $rows->num_rows != 0) {
             $row['price'],
             $row
         );
-        echo $objs[$i]->printItem();
+        echo <<<HTML
+            <div class="item">
+                <div class="checkdiv">
+                    <input type="checkbox" class="delete-checkbox" name="{$objs[$i]->sku}"><br>
+                </div>
+                <span>{$objs[$i]->sku}</span><br>
+                <span>{$objs[$i]->name}</span><br>
+                <span>{$objs[$i]->price}\$</span><br>
+                <span>$objs[$i]->print_item</span><br>
+            </div>
+        HTML;
         $i++;
     }
 } else {

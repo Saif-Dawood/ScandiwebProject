@@ -49,9 +49,16 @@ class DVD extends Item
         parent::__construct($sku, $name, $price);
         if (array_key_exists('size', $data))
             $this->size = $data['size'];
-        else
+        else if (array_key_exists('dbdiff', $data))
             $this->size = $data['dbdiff'];
+        else
+            $this->size = "";
         $this->dbdiff = $this->size;
+        $this->print_item = "Size: {$this->size} MB";
+        $this->print_add = array(
+            array('lower' => 'size', 'title' => 'Size', 'mu' => ' (MB)')
+        );
+        $this->print_description = "Please provide the size of the disc";
     }
 
     /**
@@ -66,12 +73,13 @@ class DVD extends Item
      */
     public function saveObj(Table $table)
     {
-        $cols_vals['sku'] = $this->sku;
-        $cols_vals['name'] = $this->name;
-        $cols_vals['price'] = $this->price;
-        $cols_vals['type'] = "DVD";
-        $cols_vals['dbdiff'] = $this->dbdiff;
-
+        $cols_vals = [
+            'sku' => $this->sku,
+            'name' => $this->name,
+            'price' => $this->price,
+            'type' => "DVD",
+            'dbdiff' => $this->dbdiff
+        ];
         return $table->addRow($cols_vals);
     }
 

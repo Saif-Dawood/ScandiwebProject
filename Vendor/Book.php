@@ -49,9 +49,16 @@ class Book extends Item
         parent::__construct($sku, $name, $price);
         if (array_key_exists('weight', $data))
             $this->weight = $data['weight'];
-        else
+        else if (array_key_exists('dbdiff', $data))
             $this->weight = $data['dbdiff'];
+        else
+            $this->weight = "";
         $this->dbdiff = $this->weight;
+        $this->print_item = "Weight: {$this->weight} KG";
+        $this->print_add = array(
+            array('lower' => 'weight', 'title' => 'Weight', 'mu' => ' (KG)')
+        );
+        $this->print_description = "Please provide the weight of the book";
     }
 
     /**
