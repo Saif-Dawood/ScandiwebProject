@@ -43,9 +43,7 @@ abstract class Item
     protected $price;
     protected $checked = false;
     protected $dbdiff;
-    public $print_item;
-    public $print_add;
-    public $print_description;
+    protected $print_dbdiff;
     protected $errors = array();
     protected $error_count;
 
@@ -123,6 +121,34 @@ abstract class Item
         return $data;
     }
 
+	/**
+	 * @return array
+	 */
+	public function getErrors(): array {
+		return $this->errors;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName(): string {
+		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPrice(): string {
+		return $this->price;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPrint_dbdiff(): string {
+		return $this->print_dbdiff;
+	}
+
     /**
      * An abstract function for storing the properties
      * of the object in the database
@@ -148,6 +174,14 @@ abstract class Item
      * @return string
      */
     public abstract function printErrors(): string;
+
+    /**
+     * An abstract function for getting the
+     * extra values of the child classes
+     * 
+     * @return string
+     */
+    public abstract function getExtraValues(string $var_name): string;
 
     /**
      * An abstract function for getting the

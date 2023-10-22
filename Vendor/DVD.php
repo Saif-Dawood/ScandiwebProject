@@ -29,6 +29,10 @@ use Vendor\Item;
 class DVD extends Item
 {
     protected $size;
+    public const PRINT_ADD = array(
+        array('lower' => 'size', 'title' => 'Size', 'mu' => 'MB')
+    );
+    public const PRINT_DESCRIPTION = "Please provide the size of the disc";
 
     /**
      * DVD Constructor
@@ -54,11 +58,7 @@ class DVD extends Item
         else
             $this->size = "";
         $this->dbdiff = $this->size;
-        $this->print_item = "Size: {$this->size} MB";
-        $this->print_add = array(
-            array('lower' => 'size', 'title' => 'Size', 'mu' => ' (MB)')
-        );
-        $this->print_description = "Please provide the size of the disc";
+        $this->print_dbdiff = "Size: {$this->size} MB";
     }
 
     /**
@@ -190,4 +190,17 @@ class DVD extends Item
             $this->error_count--;
         }
     }
+
+	/**
+     * An abstract function for getting the
+     * extra values of the child classes
+     * 
+     * @return string
+     */
+	public function getExtraValues(string $var_name): string {
+		if ($var_name == "size")
+            return $this->size;
+        else
+            return "";
+	}
 }

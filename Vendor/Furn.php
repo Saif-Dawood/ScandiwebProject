@@ -34,6 +34,12 @@ class Furn extends Item
     protected $length;
     protected $width;
     protected $height;
+    public const PRINT_ADD = array(
+        array('lower' => 'height', 'title' => 'Height', 'mu' => 'CM'),
+        array('lower' => 'width', 'title' => 'Width', 'mu' => 'CM'),
+        array('lower' => 'length', 'title' => 'Length', 'mu' => 'CM')
+    );
+    public const PRINT_DESCRIPTION = "Please provide the dimensions";
 
     /**
      * Furniture Constructor
@@ -63,13 +69,7 @@ class Furn extends Item
             $this->dbdiff = $data['dbdiff'];
         else
             $this->dbdiff = "";
-        $this->print_item = "Dimensions: {$this->dbdiff}";
-        $this->print_add = array(
-            array('lower' => 'height', 'title' => 'Height', 'mu' => ''),
-            array('lower' => 'width', 'title' => 'Width', 'mu' => ''),
-            array('lower' => 'length', 'title' => 'Length', 'mu' => '')
-        );
-        $this->print_description = "Please provide the dimensions";
+        $this->print_dbdiff = "Dimensions: {$this->dbdiff}";
     }
 
     /**
@@ -292,4 +292,21 @@ class Furn extends Item
             $this->error_count--;
         }
     }
+
+	/**
+     * An abstract function for getting the
+     * extra values of the child classes
+     * 
+     * @return string
+     */
+	public function getExtraValues(string $var_name): string {
+		if ($var_name == "height")
+            return $this->height;
+        else if ($var_name == "width")
+            return $this->width;
+        else if ($var_name == "length")
+            return $this->length;
+        else
+            return "";
+	}
 }

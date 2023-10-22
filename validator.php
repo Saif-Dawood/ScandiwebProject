@@ -55,6 +55,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $err_no += $obj->getErrCount();
 
         $Attr = $obj->printErrors();
+        $Attr = "";
+        $extra_errors = $obj->getErrors();
+        foreach ($obj::PRINT_ADD as $field) {
+            $Attr .= <<<HTML
+                <div class="attrib">
+                    <label for="{$field['lower']}">{$field['title']} ({$field['mu']}): </label>
+                    <input type="text" name="{$field['lower']}" id="{$field['lower']}" value="{$obj->getExtraValues($field['lower'])}">
+                    <span for="{$field['lower']}" class="text-danger">
+                        * {$extra_errors[$field['lower']]}
+                    </span>
+                </div>
+            HTML;
+        }
+        $Attr .= <<<HTML
+            <p style="font-weight:bold;">
+        HTML . $obj::PRINT_DESCRIPTION . "</p>";
     }
 
     // check if no errors

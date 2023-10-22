@@ -15,15 +15,12 @@ $type = $_REQUEST["t"];
 
 $type = "Vendor\\" . $type;
 
-if (class_exists($type))
-{
-    $obj = new $type("", "", "", array());
+if (class_exists($type)) {
     $html = "";
-    foreach ($obj->print_add as $field)
-    {
+    foreach ($type::PRINT_ADD as $field) {
         $html .= <<<HTML
             <div class="attrib">
-                <label for="{$field['lower']}">{$field['title']}{$field['mu']}: </label>
+                <label for="{$field['lower']}">{$field['title']} ({$field['mu']}): </label>
                 <input type="text" name="{$field['lower']}" id="{$field['lower']}" value="">
                 <span for="{$field['lower']}" class="text-danger">
                     *
@@ -32,11 +29,11 @@ if (class_exists($type))
         HTML;
     }
     $html .= <<<HTML
-        <p style="font-weight:bold;">{$obj->print_description}</p>
-    HTML;
+        <p style="font-weight:bold;">
+    HTML . $type::PRINT_DESCRIPTION . "</p>";
+
     echo $html;
-}
-else
+} else
     echo <<<HTML
     <p style="font-weight:bold;">Quit playing with the html of this file</p>
     HTML;

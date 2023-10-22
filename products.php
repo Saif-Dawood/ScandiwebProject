@@ -51,12 +51,12 @@ if ($rows != false && $rows->num_rows != 0) {
         echo <<<HTML
             <div class="item">
                 <div class="checkdiv">
-                    <input type="checkbox" class="delete-checkbox" name="{$objs[$i]->sku}"><br>
+                    <input type="checkbox" class="delete-checkbox" name="{$objs[$i]->getSku()}"><br>
                 </div>
-                <span>{$objs[$i]->sku}</span><br>
-                <span>{$objs[$i]->name}</span><br>
-                <span>{$objs[$i]->price}\$</span><br>
-                <span>$objs[$i]->print_item</span><br>
+                <span>{$objs[$i]->getSku()}</span><br>
+                <span>{$objs[$i]->getName()}</span><br>
+                <span>{$objs[$i]->getPrice()}\$</span><br>
+                <span>{$objs[$i]->getPrint_dbdiff()}</span><br>
             </div>
         HTML;
         $i++;

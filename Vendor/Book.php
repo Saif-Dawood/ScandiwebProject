@@ -29,6 +29,10 @@ use Vendor\Database\Table;
 class Book extends Item
 {
     protected $weight;
+    public const PRINT_ADD = array(
+        array('lower' => 'weight', 'title' => 'Weight', 'mu' => 'KG')
+    );
+    public const PRINT_DESCRIPTION = "Please provide the weight of the book";
 
     /**
      * Book Constructor
@@ -54,11 +58,7 @@ class Book extends Item
         else
             $this->weight = "";
         $this->dbdiff = $this->weight;
-        $this->print_item = "Weight: {$this->weight} KG";
-        $this->print_add = array(
-            array('lower' => 'weight', 'title' => 'Weight', 'mu' => ' (KG)')
-        );
-        $this->print_description = "Please provide the weight of the book";
+        $this->print_dbdiff = "Weight: {$this->weight} KG";
     }
 
     /**
@@ -189,4 +189,17 @@ class Book extends Item
             $this->error_count--;
         }
     }
+
+	/**
+     * An abstract function for getting the
+     * extra values of the child classes
+     * 
+     * @return string
+     */
+	public function getExtraValues(string $var_name): string {
+		if ($var_name == "weight")
+            return $this->weight;
+        else
+            return "";
+	}
 }

@@ -37,7 +37,8 @@
 
         <div class="attrib">
             <label for="name">Name: </label>
-            <input type="text" name="name" id="name" value="<?= $data['name'] ?>">
+            <input type="text" name="name" id="name"
+            value="<?= $data['name'] ?>">
             <span for="name" class="text-danger">
                 *
                 <?= $errors['name'] ?>
