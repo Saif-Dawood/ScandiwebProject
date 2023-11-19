@@ -21,8 +21,9 @@ if (class_exists($type)) {
         $html .= <<<HTML
             <div class="attrib">
                 <label for="{$field['lower']}">{$field['title']} ({$field['mu']}): </label>
-                <input type="text" name="{$field['lower']}" id="{$field['lower']}" value="">
-                <span for="{$field['lower']}" class="text-danger">
+                <input type="text" name="{$field['lower']}" id="{$field['lower']}"
+                    class="req_field dec_field" value="">
+                <span for="{$field['lower']}" class="text-danger" id="err_{$field['lower']}">
                     *
                 </span>
             </div>
@@ -33,7 +34,8 @@ if (class_exists($type)) {
     HTML . $type::PRINT_DESCRIPTION . "</p>";
 
     echo $html;
-} else
+} else {
     echo <<<HTML
     <p style="font-weight:bold;">Quit playing with the html of this file</p>
     HTML;
+}

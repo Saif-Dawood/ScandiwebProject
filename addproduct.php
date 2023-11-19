@@ -23,13 +23,13 @@
         <input type="button" onclick="window.location.href='index.php';" value="Cancel"
             class="btn btn-outline-secondary">
     </header>
-    <form action="addproduct.php" method="post" id="product_form">
+    <form action="addproduct.php" method="post" id="product_form" onsubmit="return validateForm()">
 
         <span class="text-danger">* Required fields</span>
         <div class="attrib">
             <label for="sku">SKU: </label>
-            <input type="text" name="sku" id="sku" value="<?= $data['sku'] ?>">
-            <span for="sku" class="text-danger">
+            <input type="text" name="sku" id="sku" class="req_field let_field" value="<?= $data['sku'] ?>">
+            <span for="sku" class="text-danger" id="err_sku">
                 *
                 <?= $errors['sku'] ?>
             </span>
@@ -37,9 +37,8 @@
 
         <div class="attrib">
             <label for="name">Name: </label>
-            <input type="text" name="name" id="name"
-            value="<?= $data['name'] ?>">
-            <span for="name" class="text-danger">
+            <input type="text" name="name" id="name" class="req_field space_field" value="<?= $data['name'] ?>">
+            <span for="name" class="text-danger" id="err_name">
                 *
                 <?= $errors['name'] ?>
             </span>
@@ -47,8 +46,8 @@
 
         <div class="attrib">
             <label for="price">Price ($): </label>
-            <input type="text" name="price" id="price" value="<?= $data['price'] ?>">
-            <span for="price" class="text-danger">
+            <input type="text" name="price" id="price" class="req_field dec_field" value="<?= $data['price'] ?>">
+            <span for="price" class="text-danger" id="err_price">
                 *
                 <?= $errors['price'] ?>
             </span>
@@ -56,7 +55,7 @@
 
         <div class="attrib">
             <label for="type">Type Switcher: </label>
-            <select name="type" id="productType" onchange="displayAttr(this.value)">
+            <select name="type" id="productType" class="req_field type_field" onchange="displayAttr(this.value)">
                 <option value="" disabled <?php if ($data['type'] == "")
                     echo "selected"; ?>>
                     Type Switcher
@@ -74,7 +73,7 @@
                     Furniture
                 </option>
             </select>
-            <span for="type" class="text-danger">
+            <span for="type" class="text-danger" id="err_type">
                 *
                 <?= $errors['type'] ?>
             </span>
