@@ -8,12 +8,21 @@ use mysqli;
 /**
  * A class for dealing with database tables
  *
+ * 
  * Properties:
- *      db -> database
- *      name -> table's name
- *      cols -> an array:
+ *   - db: Database
+ *   - name: Table Name
+ *   - cols: an array:
  *                  key: column name
  *                  value: column types and constraints
+ * 
+ * Methods:
+ *   - __construct(Database $db,
+ *                 string $name,
+ *                 array $cols)
+ *   - getRows(): array|bool
+ *   - addRow(TableRow $row): bool
+ *   - delRow(string $sku): bool
  */
 class Table
 {
@@ -70,9 +79,9 @@ class Table
     /**
      * A function to get all rows of this table
      * 
-     * @return
+     * @return array[TableRow]
      */
-    public function getRows()
+    public function getRows(): array|bool
     {
         // Try connecting
         $conn = new mysqli();
@@ -85,10 +94,36 @@ class Table
 
         // Try to get rows
         try {
-            $result = $conn->query($sql);
+            $rows = $conn->query($sql);
         } catch (Exception $e) {
             $conn->close();
             return false;
+        }
+
+        // Create an array of TableRows
+        $result = array();
+
+        // Check if there are rows to loop through
+        if ($rows != false && $rows->num_rows != 0) {
+            // Initiallize index
+            $i = 0;
+
+            // Get values
+            while ($row = $rows->fetch_assoc()) {
+                // Create a new TableRow obj
+                $tableRow = new TableRow();
+
+                $tableRow->setColumnsValue($row);
+
+                // Add TableRow to $result array
+                $result[$i] = $tableRow;
+
+                // Increment index
+                $i++;
+            }
+
+        } else {
+            $result = false;
         }
 
         // close connection
@@ -101,14 +136,14 @@ class Table
     /**
      * Inserts a new row into this table.
      *
-     * @param array $cols_vals An array containing the column names and 
+     * @param TableRow $row A TableRow containing the column names and 
      *                         values to be inserted. Each key is the
      *                         column name and each value is the value
      *                         to be inserted.
      *
      * @return bool True if the row was successfully inserted, false otherwise.
      */
-    public function addRow(array $cols_vals): bool
+    public function addRow(TableRow $row): bool
     {
         // Try connecting
         $conn = new mysqli();
@@ -123,7 +158,12 @@ class Table
         // Columns
         $i = 0;
 
-        foreach ($cols_vals as $col => $val) {
+        foreach ($this->cols as $col => $_) {
+            // Check whether that column has a value to be added
+            if (!$row->getColumnValue($col)) {
+                continue;
+            }
+
             if ($i !== 0) {
                 $sql .= ", ";
             }
@@ -137,11 +177,20 @@ class Table
         // Values
         $i = 0;
 
-        foreach ($cols_vals as $col => $val) {
+        foreach ($this->cols as $col => $_) {
+            $val = $row->getColumnValue($col);
+
+            // Check whether that column has a value to be added
+            if (!$val) {
+                continue;
+            }
+
             if ($i !== 0) {
                 $sql .= ", ";
             }
 
+            // Check if it is a string or not
+            // to add quotations on it
             if (gettype($val) === "string") {
                 $sql .= "'$val'";
             } else {

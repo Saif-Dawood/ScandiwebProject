@@ -31,7 +31,7 @@
             <input type="text" name="sku" id="sku" class="req_field let_field" value="<?= $data['sku'] ?>">
             <span for="sku" class="text-danger" id="err_sku">
                 *
-                <?= $errors['sku'] ?>
+                <?= $sku_err ?>
             </span>
         </div>
 
@@ -40,7 +40,6 @@
             <input type="text" name="name" id="name" class="req_field space_field" value="<?= $data['name'] ?>">
             <span for="name" class="text-danger" id="err_name">
                 *
-                <?= $errors['name'] ?>
             </span>
         </div>
 
@@ -49,7 +48,6 @@
             <input type="text" name="price" id="price" class="req_field dec_field" value="<?= $data['price'] ?>">
             <span for="price" class="text-danger" id="err_price">
                 *
-                <?= $errors['price'] ?>
             </span>
         </div>
 
@@ -75,7 +73,6 @@
             </select>
             <span for="type" class="text-danger" id="err_type">
                 *
-                <?= $errors['type'] ?>
             </span>
         </div>
         <div id="Attr">

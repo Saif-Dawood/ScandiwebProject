@@ -46,6 +46,7 @@ function validateForm() {
                     "* " + label.innerHTML.slice(0, -2) + " is required";
                 oof = true;
             } else {
+                req_fields[i].value = testInput(req_fields[i].value);
                 err_field.innerHTML = "*";
             }
         }
@@ -163,8 +164,7 @@ function validateForm() {
             );
             return false;
         }
-        if (!(err_field_id in err_fields))
-        {
+        if (!(err_field_id in err_fields)) {
             if (
                 type_field.value != "DVD" &&
                 type_field.value != "Book" &&
@@ -173,8 +173,7 @@ function validateForm() {
                 err_fields[err_field_id] = 1;
                 err_field.innerHTML = "* Don't";
                 oof = true;
-            }
-            else {
+            } else {
                 err_field.innerHTML = "*";
             }
         }
@@ -188,40 +187,20 @@ function validateForm() {
     }
 }
 
-// console.log("what the fuck");
-// document.addEventListener('DOMContentLoaded', () => {
+function testInput(data) {
+    // Trim leading and trailing whitespaces
+    data = data.trim();
 
-// const form = document.getElementById("product_form");
-// console.log(form);
+    // Remove backslashes
+    data = data.replace(/\\/g, "");
 
-// form.addEventListener('submit', (event) => {
-// event.preventDefault();
-// console.log("qewrty")
+    // Convert HTML special characters to entities
+    data = data
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 
-// const formData = new FormData(form);
-// fetch("index.php",{
-//     method: 'POST',
-//     body: formData
-// })
-// .then(response => {
-//     if (response.ok) {
-// const sku = document.getElementById("sku").value;
-// if (sku == "") {
-//     document.getElementById("err_sku").innerHTML = "Please enter sku field";
-// } else {
-//     document.getElementById("err_sku").innerHTML = "Successfully entered sku";
-// }
-//         qwerty = document.getElementsByClassName("qwerty");
-//         for (qwer in qwerty)
-//         {
-
-//         }
-//     } else {
-//         throw new Error("Network response was not ok");
-//     }
-// })
-// .catch(error => {
-//     console.error("Error:", error);
-// });
-//     });
-// });
+    return data;
+}

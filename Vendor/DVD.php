@@ -3,6 +3,7 @@
 namespace Vendor;
 
 use Vendor\Database\Table;
+use Vendor\Database\TableRow;
 use Vendor\Item;
 
 /**
@@ -20,11 +21,7 @@ use Vendor\Item;
  *   -             string $price,
  *   -             array $data)
  *   - saveObj(Table $table)
- *   - printItem(): string
- *   - printErrors(): string
- *   - printHtml(): string
- *   - validate(): array
- *   - validateSize()
+ *   - getExtraValues(string $var_name): string
  */
 class DVD extends Item
 {
@@ -37,27 +34,20 @@ class DVD extends Item
     /**
      * DVD Constructor
      * 
-     * @param string $sku
-     * @param string $name
-     * @param string $price
-     * @param array $data
+     * @param TableRow $row
      * 
      * @override
      */
-    public function __construct(
-        string $sku,
-        string $name,
-        string $price,
-        array $data
-    ) {
-        parent::__construct($sku, $name, $price);
-        if (array_key_exists('size', $data))
-            $this->size = $data['size'];
-        else if (array_key_exists('dbdiff', $data))
-            $this->size = $data['dbdiff'];
-        else
-            $this->size = "";
-        $this->dbdiff = $this->size;
+    public function __construct(TableRow $row)
+    {
+        parent::__construct($row);
+        $this->size = $row->getColumnValue('size');
+        $this->dbdiff = $row->getColumnValue('dbdiff');
+        if ($this->size == "") {
+            $this->size = $this->dbdiff;
+        } else if ($this->dbdiff == "") {
+            $this->dbdiff = $this->size;
+        }
         $this->print_dbdiff = "Size: {$this->size} MB";
     }
 
@@ -73,134 +63,26 @@ class DVD extends Item
      */
     public function saveObj(Table $table)
     {
-        $cols_vals = [
-            'sku' => $this->sku,
-            'name' => $this->name,
-            'price' => $this->price,
-            'type' => "DVD",
-            'dbdiff' => $this->dbdiff
-        ];
-        return $table->addRow($cols_vals);
+        $row = new TableRow();
+        $row->setColumnValue('sku', $this->sku);
+        $row->setColumnValue('name', $this->name);
+        $row->setColumnValue('price', $this->price);
+        $row->setColumnValue('type', "DVD");
+        $row->setColumnValue('dbdiff', $this->dbdiff);
+        return $table->addRow($row);
     }
 
     /**
-     * A function to print the div containing the item
-     * in index.php
-     * 
-     * @return string
-     * 
-     * @override
-     */
-    public function printItem(): string
-    {
-        return <<<HTML
-            <div class="item">
-                <div class="checkdiv">
-                    <input type="checkbox" class="delete-checkbox" name="{$this->sku}"><br>
-                </div>
-                <span>{$this->sku}</span><br>
-                <span>{$this->name}</span><br>
-                <span>{$this->price}\$</span><br>
-                <span>Size: {$this->size} MB</span><br>
-            </div>
-        HTML;
-    }
-
-
-    /**
-     * A function for getting the
-     * html for the different properties
-     * 
-     * @return string
-     * 
-     * @override
-     */
-    public function printErrors(): string
-    {
-        return <<<HTML
-            <div class="attrib">
-                <label for="size">Size (MB): </label>
-                <input type="text" name="size" id="size" value="{$this->size}">
-                <span for="size" class="text-danger">
-                    * {$this->errors['size']}
-                </span>
-            </div>
-            <p style="font-weight:bold;">Please provide the size of the disc</p>
-        HTML;
-    }
-
-    /**
-     * A function for getting the
-     * html for the different fields of the childs
-     * 
-     * @return string
-     */
-    public static function printHtml(): string
-    {
-
-        return <<<HTML
-            <div class="attrib">
-                <label for="size">Size (MB): </label>
-                <input type="text" name="size" id="size" value="">
-                <span for="size" class="text-danger">
-                    *
-                </span>
-            </div>
-            <p style="font-weight:bold;">Please provide the size of the disc</p>
-        HTML;
-    }
-
-    /**
-     * A function that validates items before dealing with them
-     * 
-     * @return array
-     */
-    public function validate(): array
-    {
-        $this->validateSize();
-
-        return $this->errors;
-    }
-
-    /**
-     * Validator for Size
-     *
-     */
-    private function validateSize()
-    {
-        $this->error_count++;
-        if (empty($this->size)) {
-            $this->errors['size'] = "Size is required";
-            return;
-        }
-
-        $this->size = $this::testInput($this->size);
-
-        if (!filter_var($this->size, FILTER_VALIDATE_FLOAT)) {
-            $this->errors['size'] = "Only decimal numbers are allowed";
-            return;
-        }
-
-        $this->size = (float) $this->size;
-
-        if ($this->size <= 0)
-            $this->errors['size'] = "Only positive numbers are allowed";
-        else {
-            $this->errors['size'] = "";
-            $this->error_count--;
-        }
-    }
-
-	/**
      * An abstract function for getting the
      * extra values of the child classes
      * 
      * @return string
      */
-	public function getExtraValues(string $var_name): string {
-		if ($var_name == "size")
+    public function getExtraValues(string $var_name): string
+    {
+        if ($var_name == "size")
             return $this->size;
         else
             return "";
-	}
+    }
 }

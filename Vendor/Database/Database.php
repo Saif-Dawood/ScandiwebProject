@@ -18,6 +18,7 @@ use mysqli;
  *   - db: Database name
  * 
  * Methods:
+ *   - __construct(string $db)
  *   - connectDB(mysqli &$conn): bool
  */
 class Database

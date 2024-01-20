@@ -4,6 +4,7 @@ namespace Vendor;
 
 use mysqli;
 use Vendor\Database\Table;
+use Vendor\Database\TableRow;
 
 /**
  * A class for all the items
@@ -18,23 +19,22 @@ use Vendor\Database\Table;
  *   - checked: If the checkbox is checked or not
  *              for mass delete
  *   - dbdiff: A parameter for storing the different
- *              attributes in the database
- *   - errors: an array of errors after validation
- *   - error_count: The no of errors found
+ *             attributes in the database
+ *   - print_dbdiff: An html string of the dbdiff part
+ *                   to be written on the item in products page
  * 
  * Methods:
  *   - __construct(string $sku,
  *                 string $name,
  *                 string $price)
  *   - setChecked(bool $checked)
- *   - getSku(): string
- *   - getErrCount(): int
  *   - massDelete(Table $table, array $items)
- *   - static testInput($data)
+ *   - getSku(): string
+ *   - getName(): string
+ *   - getPrice(): string
+ *   - getPrint_dbdiff(): string
  *   - abstract saveObj(Table $table)
- *   - abstract printItem(): string;
- *   - abstract printErrors(): string;
- *   - abstract printHtml(): string;
+ *   - abstract getExtraValues(string $var_name): string
  */
 abstract class Item
 {
@@ -44,25 +44,17 @@ abstract class Item
     protected $checked = false;
     protected $dbdiff;
     protected $print_dbdiff;
-    protected $errors = array();
-    protected $error_count;
 
     /**
      * Item constructor.
-     *
-     * @param string $sku
-     * @param string $name
-     * @param string $price
+     * 
+     * @param TableRow $row
      */
-    public function __construct(
-        string $sku,
-        string $name,
-        string $price
-    ) {
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->price = $price;
-        $this->error_count = 0;
+    public function __construct(TableRow $row)
+    {
+        $this->sku = $row->getColumnValue('sku');
+        $this->name = $row->getColumnValue('name');
+        $this->price = $row->getColumnValue('price');
     }
 
     /**
@@ -73,26 +65,6 @@ abstract class Item
     public function setChecked(bool $checked): void
     {
         $this->checked = $checked;
-    }
-
-    /**
-     * Getter for sku
-     * 
-     * @return string
-     */
-    public function getSku(): string
-    {
-        return $this->sku;
-    }
-
-    /**
-     * Getter for error_count
-     * 
-     * @return int
-     */
-    public function getErrCount(): int
-    {
-        return $this->error_count;
     }
 
     /**
@@ -113,41 +85,39 @@ abstract class Item
         }
     }
 
-    protected static function testInput($data)
+    /**
+     * Getter for sku
+     * 
+     * @return string
+     */
+    public function getSku(): string
     {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+        return $this->sku;
     }
 
-	/**
-	 * @return array
-	 */
-	public function getErrors(): array {
-		return $this->errors;
-	}
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getName(): string {
-		return $this->name;
-	}
+    /**
+     * @return string
+     */
+    public function getPrice(): string
+    {
+        return $this->price;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPrice(): string {
-		return $this->price;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getPrint_dbdiff(): string {
-		return $this->print_dbdiff;
-	}
+    /**
+     * @return string
+     */
+    public function getPrint_dbdiff(): string
+    {
+        return $this->print_dbdiff;
+    }
 
     /**
      * An abstract function for storing the properties
@@ -160,34 +130,10 @@ abstract class Item
     public abstract function saveObj(Table $table);
 
     /**
-     * An abstract function for printing
-     * the object in the form
-     * 
-     * @return string
-     */
-    public abstract function printItem(): string;
-
-    /**
-     * An abstract function for getting the
-     * html for the different fields of the childs
-     * 
-     * @return string
-     */
-    public abstract function printErrors(): string;
-
-    /**
      * An abstract function for getting the
      * extra values of the child classes
      * 
      * @return string
      */
     public abstract function getExtraValues(string $var_name): string;
-
-    /**
-     * An abstract function for getting the
-     * html for the different fields of the childs
-     * 
-     * @return string
-     */
-    public static abstract function printHtml(): string;
 }

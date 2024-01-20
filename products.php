@@ -1,5 +1,6 @@
 <?php
 require "Vendor/Database/Database.php";
+require "Vendor/Database/TableRow.php";
 require "Vendor/Database/Table.php";
 require "Vendor/Item.php";
 require "Vendor/DVD.php";
@@ -38,16 +39,19 @@ $rows = $table->getRows();
 $objs = array();
 
 // Check if there are rows to loop through
-if ($rows != false && $rows->num_rows != 0) {
+if ($rows != false) {
+    // Initiallize index
     $i = 0;
-    while ($row = $rows->fetch_assoc()) {
-        $type = "Vendor\\" . $row['type'];
-        $objs[$i] = new $type(
-            $row['sku'],
-            $row['name'],
-            $row['price'],
-            $row
-        );
+
+    // Create Item object for each row
+    foreach ($rows as $row) {
+        // Get type
+        $type = "Vendor\\" . $row->getColumnValue('type');
+
+        // Create Item obj with TableRow $row
+        $objs[$i] = new $type($row);
+
+        // View item on products page
         echo <<<HTML
             <div class="item">
                 <div class="checkdiv">
@@ -59,6 +63,8 @@ if ($rows != false && $rows->num_rows != 0) {
                 <span>{$objs[$i]->getPrint_dbdiff()}</span><br>
             </div>
         HTML;
+
+        // Increment Index
         $i++;
     }
 } else {
