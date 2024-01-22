@@ -1,5 +1,3 @@
-<?php ini_set('display_errors', 1); ?>
-
 <?php require "validator.php" ?>
 
 <!DOCTYPE html>
