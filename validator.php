@@ -34,14 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Create a TableRow obj
     $row = new TableRow();
 
+    // Add $_POST data to the row obj 
     $row->setColumnsValue($_POST);
 
     $type = "Vendor\\" . $row->getColumnValue('type');
 
+    // Create an Item obj
     $obj = new $type(
         $row
     );
 
+    // Update the data of the form in case of repeated SKU error
     $data = array(
         'sku' => $obj->getSku(),
         'name' => $obj->getName(),
@@ -49,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'type' => $row->getColumnValue('type')
     );
 
-
+    // Update the extra fields in case of repeated SKU error
     foreach ($obj::PRINT_ADD as $field) {
         $Attr .= <<<HTML
             <div class="attrib">
