@@ -179,6 +179,32 @@ function validateForm() {
         }
     }
 
+    // SKU Validation
+    var sku_field = document.getElementsByClassName("sku_field");
+    if (sku_field.length) {
+        sku_field = sku_field[0];
+        err_field_id = "err_" + sku_field.name;
+        err_field = document.getElementById(err_field_id);
+        if (!err_field) {
+            console.error(
+                "Element with id: '" + err_field_id + "' does not exist"
+            );
+            return false;
+        }
+        if (!(err_field_id in err_fields)) {
+            var skus = document.getElementById("skus").innerHTML;
+            skus = testInput(skus);
+            skus = skus.split("\n");
+            if (skus.includes(sku_field.value)) {
+                err_fields[err_field_id] = 1;
+                err_field.innerHTML = "* This SKU was already used before";
+                oof = true;
+            } else {
+                err_field.innerHTML = "*";
+            }
+        }
+    }
+
     // Error Existence Checking
     if (oof === true) {
         return false;

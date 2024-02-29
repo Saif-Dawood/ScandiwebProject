@@ -28,10 +28,13 @@
         <span class="text-danger">* Required fields</span>
         <div class="attrib">
             <label for="sku">SKU: </label>
-            <input type="text" name="sku" id="sku" class="req_field let_field" value="<?= $data['sku'] ?>">
+            <input type="text" name="sku" id="sku" class="req_field let_field sku_field" value="<?= $data['sku'] ?>">
             <span for="sku" class="text-danger" id="err_sku">
                 *
                 <?= $sku_err ?>
+            </span>
+            <span id="skus" hidden>
+                <?= $skus ?>
             </span>
         </div>
 
