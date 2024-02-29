@@ -29,6 +29,7 @@ use Vendor\Database\TableRow;
  *                 string $price)
  *   - setChecked(bool $checked)
  *   - massDelete(Table $table, array $items)
+ *   - getSKUs(Table $table): array
  *   - getSku(): string
  *   - getName(): string
  *   - getPrice(): string
@@ -83,6 +84,25 @@ abstract class Item
                 }
             }
         }
+    }
+
+    /**
+     * A function to get all SKUs
+     * from a given Table
+     * 
+     * @param Table $table
+     */
+    public static function getSKUs(Table $table): string
+    {
+        $skus = "";
+
+        $rows = $table->getRows();
+        foreach ($rows as $row) {
+            $skus .= $row->getColumnValue('sku');
+            $skus .= "\n";
+        }
+
+        return $skus;
     }
 
     /**
