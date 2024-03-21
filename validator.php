@@ -69,6 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("refresh: 0; url = index.php");
         ob_end_flush();
     } else {
-        $sku_err = "* Error while saving item";
+        $sku_err = "Error while saving item";
     }
 }
