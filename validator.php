@@ -50,12 +50,6 @@ $cols['dbdiff'] = array("VARCHAR(30)", "NOT NULL");
 $table = new Table($db, "items", $cols);
 
 
-// Get all already used SKUs from Database
-// and store them in a hidden variable for js access
-$skus = Item::getSKUs($table);
-
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Create a TableRow obj

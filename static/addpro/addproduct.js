@@ -192,16 +192,28 @@ function validateForm() {
             return false;
         }
         if (!(err_field_id in err_fields)) {
-            var skus = document.getElementById("skus").innerHTML;
-            skus = testInput(skus);
-            skus = skus.split("\n");
-            if (skus.includes(sku_field.value)) {
-                err_fields[err_field_id] = 1;
-                err_field.innerHTML = "* This SKU was already used before";
-                oof = true;
-            } else {
-                err_field.innerHTML = "*";
-            }
+            var sku = sku_field.value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "check_sku.php", false);
+            xhr.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+            );
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    var response = JSON.parse(this.response);
+
+                    if (response.exists) {
+                        err_fields[err_field_id] = 1;
+                        err_field.innerHTML =
+                            "* This SKU was already used before";
+                        oof = true;
+                    } else {
+                        err_field.innerHTML = "*";
+                    }
+                }
+            };
+            xhr.send("sku=" + encodeURIComponent(sku));
         }
     }
 

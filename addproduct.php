@@ -33,9 +33,6 @@
                 *
                 <?= $sku_err ?>
             </span>
-            <span id="skus" hidden>
-                <?= $skus ?>
-            </span>
         </div>
 
         <div class="attrib">

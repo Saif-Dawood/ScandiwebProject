@@ -29,7 +29,7 @@ use Vendor\Database\TableRow;
  *                 string $price)
  *   - setChecked(bool $checked)
  *   - massDelete(Table $table, array $items)
- *   - getSKUs(Table $table): array
+ *   - SkuExists(Table $table): bool
  *   - getSku(): string
  *   - getName(): string
  *   - getPrice(): string
@@ -87,22 +87,28 @@ abstract class Item
     }
 
     /**
-     * A function to get all SKUs
-     * from a given Table
+     * A function to find whether
+     * a certain SKU exists in the 
+     * table or not
      * 
      * @param Table $table
+     * @param string $sku
+     * 
+     * 
+     * @return bool
      */
-    public static function getSKUs(Table $table): string
+    public static function SkuExists(Table $table, string $sku): bool
     {
-        $skus = "";
+        $skus = array();
 
         $rows = $table->getRows();
+
         foreach ($rows as $row) {
-            $skus .= $row->getColumnValue('sku');
-            $skus .= "\n";
+            if ($sku == $row->getColumnValue('sku'))
+                return true;
         }
 
-        return $skus;
+        return false;
     }
 
     /**
