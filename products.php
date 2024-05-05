@@ -42,6 +42,8 @@ $objs = array();
 if ($rows != false) {
     // Initiallize index
     $i = 0;
+    $no_items = "hidden";
+    $item = "";
 
     // Create Item object for each row
     foreach ($rows as $row) {
@@ -51,23 +53,24 @@ if ($rows != false) {
         // Create Item obj with TableRow $row
         $objs[$i] = new $type($row);
 
+        // Initialize variables
+        $sku = $objs[$i]->getSku();
+        $name = $objs[$i]->getName();
+        $price = $objs[$i]->getPrice();
+        $dbdiff = $objs[$i]->getPrint_dbdiff();
+
         // View item on products page
-        echo <<<HTML
-            <div class="item">
-                <div class="checkdiv">
-                    <input type="checkbox" class="delete-checkbox" name="{$objs[$i]->getSku()}"><br>
-                </div>
-                <span>{$objs[$i]->getSku()}</span><br>
-                <span>{$objs[$i]->getName()}</span><br>
-                <span>{$objs[$i]->getPrice()}\$</span><br>
-                <span>{$objs[$i]->getPrint_dbdiff()}</span><br>
-            </div>
-        HTML;
+        require "product.php";
 
         // Increment Index
         $i++;
     }
 } else {
-    echo "<h2>
-        No items found in the database</h2>";
+    $no_items = "";
+    $item = "hidden";
+    $sku = "";
+    $name = "";
+    $price = "";
+    $dbdiff = "";
+    require "product.php";
 }
