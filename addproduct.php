@@ -78,6 +78,59 @@
         <div id="Attr">
             <?= $Attr ?>
         </div>
+        <div id="DVD" class="dont_affect" hidden>
+            <div class="attrib">
+                <label for="size">Size (MB): </label>
+                <input type="text" name="" id="size" class="req_field dec_field" value="">
+                <span for="size" class="text-danger" id="err_size">
+                    *
+                </span>
+            </div>
+            <p style="font-weight:bold;">
+                Please provide the size of the disc
+            </p>
+        </div>
+        <div id="Book" class="dont_affect" hidden>
+            <div class="attrib">
+                <label for="weight">Weight (KG): </label>
+                <input type="text" name="" id="weight" class="req_field dec_field" value="">
+                <span for="weight" class="text-danger" id="err_weight">
+                    *
+                </span>
+            </div>
+            <p style="font-weight:bold;">
+                Please provide the weight of the book
+            </p>
+        </div>
+        <div id="Furn" class="dont_affect" hidden>
+            <div class="attrib">
+                <label for="height">Height (CM): </label>
+                <input type="text" name="" id="height" class="req_field dec_field" value="">
+                <span for="height" class="text-danger" id="err_height">
+                    *
+                </span>
+            </div>
+            <div class="attrib">
+                <label for="width">Width (CM): </label>
+                <input type="text" name="" id="width" class="req_field dec_field" value="">
+                <span for="width" class="text-danger" id="err_width">
+                    *
+                </span>
+            </div>
+            <div class="attrib">
+                <label for="length">Length (CM): </label>
+                <input type="text" name="" id="length" class="req_field dec_field" value="">
+                <span for="length" class="text-danger" id="err_length">
+                    *
+                </span>
+            </div>
+            <p style="font-weight:bold;">
+                Please provide the dimensions of the furniture
+            </p>
+        </div>
+        <div id="type_err" class="dont_affect" hidden>
+            <p style="font-weight:bold;">Quit playing with the html of this file</p>
+        </div>
 
     </form>
     <footer>Scandiweb Test Assignment</footer>

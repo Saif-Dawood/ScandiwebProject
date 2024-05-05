@@ -2,13 +2,11 @@ function displayAttr(type) {
     if (type.length == 0) {
         document.getElementById("Attr").innerHTML = "";
     } else {
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200)
-                document.getElementById("Attr").innerHTML = this.responseText;
-        };
-        xmlhttp.open("GET", "typeattr.php?t=" + type, true);
-        xmlhttp.send();
+        element = document.getElementById(type);
+        if (element === null)
+            document.getElementById("Attr").innerHTML = document.getElementById("type_err").innerHTML;
+        else
+            document.getElementById("Attr").innerHTML = element.innerHTML;
     }
 }
 
@@ -21,6 +19,10 @@ function validateForm() {
     var oof = false;
     if (req_fields.length) {
         for (var i = 0; i < req_fields.length; i++) {
+            if (req_fields[i].closest(".dont_affect"))
+                continue;
+            if (req_fields[i].name === "")
+                req_fields[i].name = req_fields[i].id;
             err_field_id = "err_" + req_fields[i].name;
             if (err_field_id in err_fields) continue;
             err_field = document.getElementById(err_field_id);
@@ -123,6 +125,8 @@ function validateForm() {
     var dec_fields = document.getElementsByClassName("dec_field");
     if (dec_fields.length) {
         for (var i = 0; i < dec_fields.length; i++) {
+            if (dec_fields[i].closest(".dont_affect"))
+                continue;
             err_field_id = "err_" + dec_fields[i].name;
             if (err_field_id in err_fields) continue;
             err_field = document.getElementById(err_field_id);
