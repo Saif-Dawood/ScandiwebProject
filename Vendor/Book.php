@@ -16,20 +16,12 @@ use Vendor\Database\Table;
  *   - weight: weight of the book in (KG)
  * 
  * Methods:
- *   - __construct(string $sku,
- *                 string $name,
- *                 string $price,
- *                 array $data)
+ *   - __construct(TableRow $row)
  *   - saveObj(Table $table)
- *   - getExtraValues(string $var_name): string
  */
 class Book extends Item
 {
     protected $weight;
-    public const PRINT_ADD = array(
-        array('lower' => 'weight', 'title' => 'Weight', 'mu' => 'KG')
-    );
-    public const PRINT_DESCRIPTION = "Please provide the weight of the book";
 
     /**
      * Book Constructor
@@ -57,11 +49,11 @@ class Book extends Item
      *
      * @param Table $table
      *
-     * @return
+     * @return bool
      * 
      * @override
      */
-    public function saveObj(Table $table)
+    public function saveObj(Table $table): bool
     {
         $row = new TableRow();
         $row->setColumnValue('sku', $this->sku);
@@ -70,19 +62,5 @@ class Book extends Item
         $row->setColumnValue('type', "Book");
         $row->setColumnValue('dbdiff', $this->dbdiff);
         return $table->addRow($row);
-    }
-
-    /**
-     * An abstract function for getting the
-     * extra values of the child classes
-     * 
-     * @return string
-     */
-    public function getExtraValues(string $var_name): string
-    {
-        if ($var_name == "weight")
-            return $this->weight;
-        else
-            return "";
     }
 }

@@ -37,9 +37,8 @@ class TableRow
      *
      * @param string $columnName
      * @param mixed $value
-     * @return void
      */
-    public function setColumnValue(string $columnName, $value): void
+    public function setColumnValue(string $columnName, mixed $value): void
     {
         $this->columns[$columnName] = $value;
     }
@@ -48,7 +47,6 @@ class TableRow
      * A setter function for multiple column values
      * 
      * @param array $columns
-     * @return void
      */
     public function setColumnsValue(array $columns): void
     {

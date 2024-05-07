@@ -76,7 +76,7 @@
             </span>
         </div>
         <div id="Attr">
-            <?= $Attr ?>
+
         </div>
         <div id="DVD" class="dont_affect" hidden>
             <div class="attrib">

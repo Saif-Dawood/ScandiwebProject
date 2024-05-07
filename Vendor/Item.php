@@ -24,9 +24,7 @@ use Vendor\Database\TableRow;
  *                   to be written on the item in products page
  * 
  * Methods:
- *   - __construct(string $sku,
- *                 string $name,
- *                 string $price)
+ *   - __construct(TableRow $row)
  *   - setChecked(bool $checked)
  *   - massDelete(Table $table, array $items)
  *   - SkuExists(Table $table): bool
@@ -34,7 +32,7 @@ use Vendor\Database\TableRow;
  *   - getName(): string
  *   - getPrice(): string
  *   - getPrint_dbdiff(): string
- *   - abstract saveObj(Table $table)
+ *   - abstract saveObj(Table $table): bool
  *   - abstract getExtraValues(string $var_name): string
  */
 abstract class Item
@@ -151,15 +149,7 @@ abstract class Item
      * 
      * @param Table $table
      * 
-     * @return
+     * @return bool
      */
-    public abstract function saveObj(Table $table);
-
-    /**
-     * An abstract function for getting the
-     * extra values of the child classes
-     * 
-     * @return string
-     */
-    public abstract function getExtraValues(string $var_name): string;
+    public abstract function saveObj(Table $table): bool;
 }

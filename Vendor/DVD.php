@@ -16,20 +16,12 @@ use Vendor\Item;
  *   - size: size of the DVD (MB)
  *
  * Methods:
- *   - __construct(string $sku,
- *   -             string $name,
- *   -             string $price,
- *   -             array $data)
+ *   - __construct(TableRow $row)
  *   - saveObj(Table $table)
- *   - getExtraValues(string $var_name): string
  */
 class DVD extends Item
 {
     protected $size;
-    public const PRINT_ADD = array(
-        array('lower' => 'size', 'title' => 'Size', 'mu' => 'MB')
-    );
-    public const PRINT_DESCRIPTION = "Please provide the size of the disc";
 
     /**
      * DVD Constructor
@@ -57,11 +49,11 @@ class DVD extends Item
      * 
      * @param Table $table
      * 
-     * @return
+     * @return bool
      * 
      * @override
      */
-    public function saveObj(Table $table)
+    public function saveObj(Table $table): bool
     {
         $row = new TableRow();
         $row->setColumnValue('sku', $this->sku);
@@ -70,19 +62,5 @@ class DVD extends Item
         $row->setColumnValue('type', "DVD");
         $row->setColumnValue('dbdiff', $this->dbdiff);
         return $table->addRow($row);
-    }
-
-    /**
-     * An abstract function for getting the
-     * extra values of the child classes
-     * 
-     * @return string
-     */
-    public function getExtraValues(string $var_name): string
-    {
-        if ($var_name == "size")
-            return $this->size;
-        else
-            return "";
     }
 }
