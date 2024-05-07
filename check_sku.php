@@ -9,7 +9,6 @@ use Vendor\Database\Database;
 use Vendor\Database\Table;
 use Vendor\Item;
 
-ini_set('display_errors', 1);
 
 
 $sku = $_POST['sku'];
